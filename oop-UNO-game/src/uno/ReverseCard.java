@@ -6,8 +6,8 @@ public class ReverseCard extends ActionCard {
 		super(color);
 		
 	}
-	public void revrese(game){
-		Game.dirrection = -Game.dirrection
+	public void revrese(Game game){
+		game.dirrection = -game.dirrection
 	}
 
 }

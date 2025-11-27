@@ -8,5 +8,8 @@ public class NumberCard extends Card {
 		super(color);
 		this.number = number;
 	}
+	public int getValue() {
+		return this.number;
+	}
 	
 }

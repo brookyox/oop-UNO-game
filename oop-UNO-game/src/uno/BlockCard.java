@@ -6,6 +6,6 @@ public class BlockCard extends ActionCard {
 		super(color);
 		
 	}
-	public void Block() {}
+	public void Block(Game game) {}
 
 }
