@@ -23,13 +23,20 @@ public class WildCard extends Card {
         } while (n < 1 || n > 4);
 
         switch (n) {
-            case 1 -> game.TopColorr = Color.RED;
-            case 2 -> game.TopColorr = Color.BLUE;
-            case 3 -> game.TopColorr = Color.GREEN;
-            case 4 -> game.TopColorr = Color.YELLOW;
+            case 1 :
+            	game.TopColorr = Color.RED;
+            	break;            
+            case 2 :
+            	game.TopColorr = Color.BLUE;
+            	break;
+            case 3 :
+            	game.TopColorr = Color.GREEN;
+            	break;
+            case 4 :
+            	game.TopColorr = Color.YELLOW;
+            	break;
            
         }
 
-        
     }
 }
