@@ -2,21 +2,36 @@ package uno;
 
 public abstract class Card {
 
-    // true si la carte possède une couleur (Number, Action)
+    
     public abstract boolean hasColor();
 
-    // renvoie la couleur si elle existe, sinon null
+    
     public abstract Color getColor();
 
-    // règle UNO simple : même couleur OU même type de carte OU joker
-    public boolean canBePlayed(Game game) {
+    
+    public boolean canBePlayed(Card topCard) {
+        
 
-        // JOKER → toujours jouable
-        if (!this.hasColor()) {
-            return true;
+        // 1️⃣ Joker → toujours jouable
+        if (!this.hasColor()) return true;
+
+        // 2️⃣ Même couleur → jouable
+        if (this.getColor() == topCard.getColor()) return true;
+
+        // 3️⃣ NumberCard → même valeur
+        if (this.getValue() != -1 && this.getValue() == topCard.getValue()) return true;
+
+        // 4️⃣ ActionCard → même type d'action
+        if (this instanceof ActionCard && topCard instanceof ActionCard) {
+            // cast pour accéder à getActionType()
+            String myAction = ((ActionCard)this).getActionType();
+            String topAction = ((ActionCard)topCard).getActionType();
+
+            if (myAction.equals(topAction)) return true;
         }
 
-        // carte colorée → même couleur
-        return this.getColor() == game.topColor;
+        // sinon → pas jouable
+        return false;
     }
+
 }
