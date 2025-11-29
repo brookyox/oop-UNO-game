@@ -29,10 +29,8 @@ public class Player {
   
   
   public boolean PlayableCard(Stack<Card> DisCard) {
-	  Card top = DisCard.peek();
-	   for (Card card : hand) {
-		   
-	   }
+	  Card top = DisCard.peek();}
+	  
   public playCard(int index) {
 	  
   }
