@@ -47,6 +47,8 @@ public class Game {
 	public void nextPlayer() {
 		
 	}
-
+    public void endGame() {
+    	
+    }
 	
 }

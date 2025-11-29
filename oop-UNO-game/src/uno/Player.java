@@ -26,11 +26,7 @@ public class Player {
 		  hand.add(card);
 	  }
   }
-  
-  
-  public boolean PlayableCard(Stack<Card> DisCard) {
-	  Card top = DisCard.peek();}
-	  
+  	  
   public Card playCard(int index){
 	  if(index >= 1 && index <= hand.size() ) {
 		  return hand.remove(index -1);
