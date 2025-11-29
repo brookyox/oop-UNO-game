@@ -8,7 +8,7 @@ public class Game {
     private Stack<Card> disCard;
     private int direction;
     private int currentPlayer;
- 
+    private Card top = disCard.peek();
     
  public Game(Player[] players,Stack<Card> deck) {
 	 this.players = players;
