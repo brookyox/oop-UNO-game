@@ -4,19 +4,22 @@ import java.util.Scanner;
 
 public class WildCard extends Card {
 
-	private Color chosenColor = null; // no color by default
-
-    @Override
-    public boolean hasColor() {
-        return false; // Joker has no color initially
+    public WildCard() {
+		
     }
+	@Override
+	public boolean hasColor() {
+		
+		return false;
+	}
+	@Override
+	public Color getColor() {
+		
+		return null;
+	}
 
-    @Override
-    public Color getColor() {
-        return chosenColor;
-    }
 
-    public void changeColor() {
+    public void changeColor(Game game) {
         Scanner sc = new Scanner(System.in);
 
         int n;
@@ -32,19 +35,20 @@ public class WildCard extends Card {
 
         switch (n) {
             case 1 :
-            	game.TopColorr = Color.RED;
+            	game.setTopColor(Color.RED);
             	break;            
             case 2 :
-            	game.TopColorr = Color.BLUE;
+            	game.setTopColor(Color.BLUE);
             	break;
             case 3 :
-            	game.TopColorr = Color.GREEN;
+            	game.setTopColor(Color.GREEN);
             	break;
             case 4 :
-            	game.TopColorr = Color.YELLOW;
+            	game.setTopColor(Color.YELLOW);
             	break;
            
         }
 
     }
+
 }

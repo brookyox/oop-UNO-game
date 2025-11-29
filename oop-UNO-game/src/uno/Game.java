@@ -7,6 +7,7 @@ public class Game {
 	private Stack<Card> disCard;
 	private int direction;
 	private Card top = disCard.peek();
+	private Color topColor;
 
 	public Card getTop() {
 		return top;
@@ -18,6 +19,13 @@ public class Game {
 
 	public void setDirection(int direction) {
 		this.direction = direction;
+	}
+	public Color getTopColor() {
+		return topColor;
+	}
+
+	public void setTopColor(Color topColor) {
+		this.topColor = topColor;
 	}
 
 	public Game(Player[] players, Deck deck) {
@@ -50,5 +58,7 @@ public class Game {
     public void endGame() {
     	
     }
+
+	
 	
 }
