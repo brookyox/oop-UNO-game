@@ -5,7 +5,7 @@ import java.util.Scanner;
 public class WildCard extends Card {
 
     public WildCard() {
-		
+		super();
     }
 	@Override
 	public boolean hasColor() {
