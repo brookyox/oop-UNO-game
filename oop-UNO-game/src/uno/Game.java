@@ -16,6 +16,10 @@ public class Game {
 		return direction;
 	}
 
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
 	public Game(Player[] players, Deck deck) {
 		this.players = players;
 		this.disCard = new Stack<>();
@@ -44,4 +48,5 @@ public class Game {
 		
 	}
 
+	
 }

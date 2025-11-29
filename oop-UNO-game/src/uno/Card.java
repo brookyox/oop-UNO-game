@@ -16,7 +16,7 @@ public abstract class Card {
     public boolean canBePlayed(Game game) {
         Card topCard = game.getTop();
 
-        // Joker → always playable
+        
         if (!this.hasColor()) return true;
 
         // same color → playable

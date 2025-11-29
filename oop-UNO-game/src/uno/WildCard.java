@@ -4,8 +4,16 @@ import java.util.Scanner;
 
 public class WildCard extends Card {
 
-    public WildCard(Color color) {
-        super(color);
+	private Color chosenColor = null; // no color by default
+
+    @Override
+    public boolean hasColor() {
+        return false; // Joker has no color initially
+    }
+
+    @Override
+    public Color getColor() {
+        return chosenColor;
     }
 
     public void changeColor() {
