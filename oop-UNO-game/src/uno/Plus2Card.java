@@ -6,7 +6,7 @@ public class Plus2Card extends ActionCard {
 		super(color);
 		
 	}
-	public void Draw2(Game game ; Deck deck) {
+	public void Draw2(Game game , Deck deck) {
 		
 	}
 
