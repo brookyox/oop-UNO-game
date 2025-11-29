@@ -23,7 +23,7 @@ public class Player {
   public void drawCard(Deck deck) {
 	  if (!deck.isEmpty()) {
 		  Card card  = deck.pop();
-		  hand.add(c);
+		  hand.add(card);
 	  }
   }
   
@@ -31,8 +31,11 @@ public class Player {
   public boolean PlayableCard(Stack<Card> DisCard) {
 	  Card top = DisCard.peek();}
 	  
-  public playCard(int index) {
-	  
+  public Card playCard(int index){
+	  if(index >= 1 && index <= hand.size() ) {
+		  return hand.remove(index -1);
+	  }
+		  return null;
   }
   public void showHand() {
       for (int i = 0; i < hand.size(); i++) {
