@@ -1,20 +1,47 @@
 package uno;
-import java.util.ArrayList;
 import java.util.Stack;
 
 public class Game {
-    private Player[] players = new Player[4];
-    private Stack<Card> deck;
-    private Stack<Card> disCard;
-    private int direction;
-    private int currentPlayer;
-    private Card top = disCard.peek();
-    
- public Game(Player[] players,Stack<Card> deck) {
-	 this.players = players;
-	 this.deck = deck;
-	 this.disCard = new Stack<>();
-	 this.currentPlayer =0;
-	 this.direction = 1;
- }
+	private Player[] players = new Player[4];
+	private Deck deck;
+	private Stack<Card> disCard;
+	private int direction;
+	private Card top = disCard.peek();
+
+	public Card getTop() {
+		return top;
+	}
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public Game(Player[] players, Deck deck) {
+		this.players = players;
+		this.disCard = new Stack<>();
+		this.direction = 1;
+	}
+
+	public void start() {
+		for (Player p : players) {
+			for (int i = 0; i < 7; i++) {
+				p.drawCard(deck);
+			}
+
+		}
+	}
+
+	public void playTurn() {
+		
+	}
+    public void applyEffect() {
+    	
+    }
+    public void checkWinCond() {
+    	
+    }
+	public void nextPlayer() {
+		
+	}
+
 }
