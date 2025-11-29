@@ -2,8 +2,8 @@ package uno;
 
 import java.util.Stack;
 public class Deck {
-	private Stack<card> pile = new Stack<>();
-	public deck() {
+	private Stack<Card> pile = new Stack<>();
+	public Deck() {
 		pile.push(new NumberCard(Color.BLUE, 0));
 		
 		for (int i = 1; i <= 9; i++) {
@@ -11,14 +11,14 @@ public class Deck {
 		    pile.push(new NumberCard(Color.BLUE, i));
 		}
 
-		pile.push(new ActionCard(Color.BLUE, Type.SKIP));
-		pile.push(new ActionCard(Color.BLUE, Type.SKIP));
+		pile.push(new BlockCard(Color.BLUE));
+		pile.push(new BlockCard(Color.BLUE));
 
-		pile.push(new ActionCard(Color.BLUE, Type.REVERSE));
-		pile.push(new ActionCard(Color.BLUE, Type.REVERSE));
+		pile.push(new ReverseCard(Color.BLUE));
+		pile.push(new ReverseCard(Color.BLUE));
 
-		pile.push(new ActionCard(Color.BLUE, Type.DRAW_TWO));
-		pile.push(new ActionCard(Color.BLUE, Type.DRAW_TWO));
+		pile.push(new Plus2Card(Color.BLUE));
+		pile.push(new Plus2Card(Color.BLUE));
 		
 		pile.push(new NumberCard(Color.RED, 0));
 		
@@ -27,14 +27,14 @@ public class Deck {
 		    pile.push(new NumberCard(Color.RED, i));
 		}
 
-		pile.push(new ActionCard(Color.RED, Type.SKIP));
-		pile.push(new ActionCard(Color.RED, Type.SKIP));
+		pile.push(new BlockCard(Color.RED));
+		pile.push(new BlockCard(Color.RED));
 
-		pile.push(new ActionCard(Color.RED, Type.REVERSE));
-		pile.push(new ActionCard(Color.RED, Type.REVERSE));
+		pile.push(new ReverseCard(Color.RED));
+		pile.push(new ReverseCard(Color.RED));
 
-		pile.push(new ActionCard(Color.RED, Type.DRAW_TWO));
-		pile.push(new ActionCard(Color.RED, Type.DRAW_TWO));
+		pile.push(new Plus2Card(Color.RED));
+		pile.push(new Plus2Card(Color.RED));
 		
 		pile.push(new NumberCard(Color.YELLOW, 0));
 		
@@ -43,38 +43,40 @@ public class Deck {
 		    pile.push(new NumberCard(Color.YELLOW, i));
 		}
 
-		pile.push(new ActionCard(Color.YELLOW, Type.SKIP));
-		pile.push(new ActionCard(Color.YELLOW, Type.SKIP));
+		pile.push(new BlockCard(Color.YELLOW));
+		pile.push(new BlockCard(Color.YELLOW));
 
-		pile.push(new ActionCard(Color.YELLOW, Type.REVERSE));
-		pile.push(new ActionCard(Color.YELLOW, Type.REVERSE));
+		pile.push(new ReverseCard(Color.YELLOW));
+		pile.push(new ReverseCard(Color.YELLOW));
 
-		pile.push(new ActionCard(Color.YELLOW, Type.DRAW_TWO));
-		pile.push(new ActionCard(Color.YELLOW, Type.DRAW_TWO));
+		pile.push(new Plus2Card(Color.YELLOW));
+		pile.push(new Plus2Card(Color.YELLOW));
 		
 		pile.push(new NumberCard(Color.YELLOW, 0));
+		
+		pile.push(new NumberCard(Color.GREEN, 0));
 		
 		for (int i = 1; i <= 9; i++) {
 		    pile.push(new NumberCard(Color.GREEN, i));
 		    pile.push(new NumberCard(Color.GREEN, i));
 		}
 
-		pile.push(new ActionCard(Color.GREEN, Type.SKIP));
-		pile.push(new ActionCard(Color.GREEN, Type.SKIP));
+		pile.push(new BlockCard(Color.GREEN));
+		pile.push(new BlockCard(Color.GREEN));
 
-		pile.push(new ActionCard(Color.GREEN, Type.REVERSE));
-		pile.push(new ActionCard(Color.GREEN, Type.REVERSE));
+		pile.push(new ReverseCard(Color.GREEN));
+		pile.push(new ReverseCard(Color.GREEN));
 
-		pile.push(new ActionCard(Color.GREEN, Type.DRAW_TWO));
-		pile.push(new ActionCard(Color.GREEN, Type.DRAW_TWO));
+		pile.push(new Plus2Card(Color.GREEN));
+		pile.push(new Plus2Card(Color.GREEN));
 		
 		for (int i = 0; i < 4; i++) {
-		    pile.push(new WildCard(Type.WILD));
-		    pile.push(new WildCard(Type.WILD_DRAW_FOUR));
+			pile.push(new WildCard());
+		    pile.push(new Wild4Card());
 		}
 	}
     
-	public card draw() {
+	public Card draw() {
 		return pile.pop();
 	}
 	public void shuffle() {
