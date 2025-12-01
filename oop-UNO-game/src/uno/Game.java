@@ -6,8 +6,17 @@ public class Game {
 	private Deck deck;
 	private Stack<Card> disCard;
 	private int direction;
+	private int currentPlayer;
 	private Card top = disCard.peek();
 	private Color topColor;
+    
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
+
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 
 	public Card getTop() {
 		return top;
