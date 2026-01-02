@@ -9,6 +9,7 @@ public class BlockCard extends ActionCard {
 	public int Block(int i ) {
 		return i++;
 		
+		
 	}
 	@Override
 	public boolean canBePlayed(Game game) {
