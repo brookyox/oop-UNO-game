@@ -127,7 +127,9 @@ public class Game {
 		
 	}
 
-	public void endGame() {
+	public boolean  endGame(Player player ) {
+		if (this.checkWinCond(player))  return true;
+		else return false;
 
 	}
 
