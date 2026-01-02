@@ -9,6 +9,7 @@ public class Game {
 	private int currentPlayer;
 	private Card top = disCard.peek();
 	private Color topColor;
+	private int TurnNumber;
     
 	public int getCurrentPlayer() {
 		return currentPlayer;
@@ -70,6 +71,14 @@ public class Game {
 
 	public Deck getDeck() {
 		return deck;
+	}
+
+	public int getTurnNumber() {
+		return TurnNumber;
+	}
+
+	public void setTurnNumber(int turnNumber) {
+		TurnNumber = turnNumber;
 	}
 	
 	
