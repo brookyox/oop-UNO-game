@@ -94,7 +94,7 @@ public class Game {
 					System.out.println(current.getName() + "played his turn");
 					turnfinish = true;
 					this.applyEffect();
-					this.checkWinCond();
+					this.checkWinCond(current);
 				} else {
 					System.out.println("Index invalid or This card cannot be played please chooose another one .");
 				}
@@ -110,23 +110,15 @@ public class Game {
 	}
 
 
-
-	public void checkWinCond() {
-
-	}
-
 	
     public void applyEffect() {
     	
     }
-    public boolean checkWinCond(Player[] players) {
+    public boolean checkWinCond(Player player) {
     	ArrayList<Card> hand;
-    	for (int i = 0; i < 4 ; i++) {
-    		hand = players[i].getHand();
+    		hand = player.getHand();
     		if ( hand.size() == 0)return true;
-    	}
 		return false;
-    	
     	
     }
     
