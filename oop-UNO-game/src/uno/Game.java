@@ -132,7 +132,9 @@ public class Game {
 		this.currentPlayer = currentplayer + 1;
 	}
 
-	public void endGame() {
+	public boolean  endGame(Player player ) {
+		if (this.checkWinCond(player))  return true;
+		else return false;
 
 	}
 
