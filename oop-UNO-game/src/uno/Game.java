@@ -53,6 +53,18 @@ public class Game {
 		}
 	}
 
+	public void StartFirstCard() {
+		Card first = deck.pop();
+		while( first instanceof WildCard ) {
+			disCard.push(first);
+			first = deck.pop();
+		}
+		while(!disCard.isEmpty()) {
+	Card temp = disCard.pop();
+	deck.push(temp);
+		}
+		disCard.push(first);
+	}
 	public void playTurn() {
 		 
 	}
