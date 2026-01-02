@@ -6,21 +6,27 @@ public class Player {
 
 	private String name;
 	private ArrayList<Card> hand;
+	private boolean isHuman ;
 
 	public Player(String name) {
 		this.name = name;
 		this.hand = new ArrayList<>();
+		this.isHuman = true;
 	}
 
 	public String getName() {
 		return name;
 	}
+	public ArrayList<Card> getHand() {
+        return hand;
+    }
     public int getHandSize() {
     	return hand.size();
     }
-    public ArrayList<Card> getHand() {
-        return hand;
-    }
+    
+    public boolean isHuman() {
+		return isHuman;
+	}
     
   public void drawCard(Deck deck) {
 	  if (!deck.isEmpty()) {

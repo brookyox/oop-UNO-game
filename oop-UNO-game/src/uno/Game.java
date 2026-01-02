@@ -73,10 +73,16 @@ public class Game {
 
 	public void playTurn() {
 		Player current = players[currentPlayer];
+		
 		System.out.println("it's" + current.getName() + "'s turn.");
 		System.out.println("top card is : " + top);
+		if(current.isHuman() == true) {
 		System.out.print("press Enter to show hand...");
 		scanner.nextLine();
+		}
+		for (int i = 0; i < 20; i++) {
+	        System.out.println();
+	    }
 		int drawAllowed=0; //only one draw allowed 
 		boolean turnfinish =false;
 		while (turnfinish == false) {
@@ -124,10 +130,11 @@ public class Game {
     
 	public void nextPlayer(int currentplayer) {
 		this.currentPlayer = currentplayer + 1;
-		
 	}
 
-	public void endGame() {
+	public boolean  endGame(Player player ) {
+		if (this.checkWinCond(player))  return true;
+		else return false;
 
 	}
 
