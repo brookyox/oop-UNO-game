@@ -6,7 +6,7 @@ public class ReverseCard extends ActionCard {
         super(color);
     }
 
-    public void apply(Game game) {
+    public void effect(Game game) {
         int d = -game.getDirection();
         game.setDirection(d);
     }

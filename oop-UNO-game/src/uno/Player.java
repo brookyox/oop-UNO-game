@@ -18,7 +18,9 @@ public class Player {
     public int getHandSize() {
     	return hand.size();
     }
-    
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
     
   public void drawCard(Deck deck) {
 	  if (!deck.isEmpty()) {

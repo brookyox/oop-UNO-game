@@ -6,9 +6,11 @@ public class BlockCard extends ActionCard {
 		super(color);
 		
 	}
-	public int Block(int i ) {
-		return i++;
+	@Override
+	public void effect (Game game ) {
+		int i = game.getTurnNumber()+ 1;
 		
+		game.setTurnNumber(i);
 		
 	}
 	@Override
