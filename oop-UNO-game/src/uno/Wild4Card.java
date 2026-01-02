@@ -15,7 +15,16 @@ public class Wild4Card extends WildCard {
 		return null;
 	}
 
-	public void draw4(Player player, Deck deck) {
+	public void draw4(Game game) {
+		this.changeColor(game);
+		int index = game.getCurrentPlayer() + game.getDirection();
+    	Player player = game.getPlayer(index);
+    	Deck deck = game.getDeck();
+    	
+    	player.drawCard(deck); 
+    	player.drawCard(deck); 
+    	player.drawCard(deck); 
+    	player.drawCard(deck); 
         
 }
 }

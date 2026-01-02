@@ -8,9 +8,9 @@ public class BlockCard extends ActionCard {
 	}
 	@Override
 	public void effect (Game game ) {
-		int i = game.getTurnNumber()+ 1;
+		int i = game.getCurrentPlayer() + game.getDirection();
 		
-		game.setTurnNumber(i);
+		game.setCurrentPlayer(i);
 		
 	}
 	@Override
