@@ -9,16 +9,11 @@ public class Game {
 	private int currentPlayer;
 	private Card top = disCard.peek();
 	private Color topColor;
-	private int turnNumber;
     
 	public int getCurrentPlayer() {
 		return currentPlayer;
 	}
 
-	public int getTurnNumber() {
-		return turnNumber;
-	}
-	
 	public void setCurrentPlayer(int currentPlayer) {
 		this.currentPlayer = currentPlayer;
 	}
@@ -57,10 +52,6 @@ public class Game {
 		}
 	}
 
-	public void setTurnNumber(int turnNumber) {
-		this.turnNumber = turnNumber;
-	}
-
 	public void playTurn() {
 		 
 	}
@@ -77,12 +68,9 @@ public class Game {
     	
     }
 
-    public Player getPlayer(int index) {
-        return players[index];
-    }
-
-
-
+	public Deck getDeck() {
+		return deck;
+	}
 	
 	
 }

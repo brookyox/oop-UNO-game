@@ -7,14 +7,6 @@ public class Player {
 	private String name;
 	private ArrayList<Card> hand;
 
-	public ArrayList<Card> getHand() {
-		return hand;
-	}
-
-	public void setHand(ArrayList<Card> hand) {
-		this.hand = hand;
-	}
-
 	public Player(String name) {
 		this.name = name;
 		this.hand = new ArrayList<>();
@@ -26,7 +18,9 @@ public class Player {
     public int getHandSize() {
     	return hand.size();
     }
-    
+    public ArrayList<Card> getHand() {
+        return hand;
+    }
     
   public void drawCard(Deck deck) {
 	  if (!deck.isEmpty()) {
