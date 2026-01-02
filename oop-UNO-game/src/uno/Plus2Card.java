@@ -8,7 +8,12 @@ public class Plus2Card extends ActionCard {
     
     @Override
     public void effect(Game game) {
+    	int index = game.getCurrentPlayer() + game.getDirection();
+    	Player player = game.getPlayer(index);
+    	Deck deck = game.getDeck();
     	
+    	player.drawCard(deck); 
+    	player.drawCard(deck); 
        
     }
 

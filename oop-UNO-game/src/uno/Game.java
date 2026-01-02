@@ -11,7 +11,7 @@ public class Game {
 	private int currentPlayer;
 	private Card top = disCard.peek();
 	private Color topColor;
-	private int TurnNumber;
+
 
 	Scanner scanner = new Scanner(System.in);
 
@@ -77,15 +77,15 @@ public class Game {
 		System.out.println("top card is : " + top);
 		System.out.print("press Enter to show hand...");
 		scanner.nextLine();
+		int drawAllowed=0; //only one draw allowed 
 		boolean turnfinish =false;
-		while (turnfinish = false) {
+		while (turnfinish == false) {
 			System.out.print("choose the index of the card you want to play or choose 0 to draw a card  : ");// index
 																												// start
 																												// from
 																												// 1
 			current.showHand();
 			int choice = scanner.nextInt() - 1;
-			int drawAllowed=0; //only one draw allowed 
 			if (choice >= 0 && choice < current.getHandSize()) {
 				Card selectedCard = current.seeCard(choice);
 				if (selectedCard.canBePlayed(this)) {
@@ -95,14 +95,12 @@ public class Game {
 					turnfinish = true;
 					this.applyEffect();
 					this.checkWinCond();
-					this.nextPlayer();
 				} else {
 					System.out.println("Index invalid or This card cannot be played please chooose another one .");
 				}
 			} else if (drawAllowed == 1) {
 				System.out.println("No card played, you skip your tun.");
 				turnfinish = true;
-				this.nextPlayer();
 			} else if (choice == -1 && drawAllowed == 0) {
 				System.out.println("you are going to draw a card");
 				current.drawCard(deck);
@@ -131,12 +129,8 @@ public class Game {
 		return deck;
 	}
 
-	public int getTurnNumber() {
-		return TurnNumber;
-	}
-
-	public void setTurnNumber(int turnNumber) {
-		TurnNumber = turnNumber;
-	}
-
+	public Player getPlayer(int index) {
+	    return players[index];
+	}	
+	
 }
