@@ -33,6 +33,7 @@ public class NumberCard extends Card {
 		if(this.color == topcolor || (top instanceof NumberCard && this.getValue() == top.getValue() )) {
 			return true;
 			
+			
 		}else return false;
 		
 		

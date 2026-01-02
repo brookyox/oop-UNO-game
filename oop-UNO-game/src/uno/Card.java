@@ -6,9 +6,8 @@ public abstract class Card {
 
     public abstract Color getColor();
 
-    public int getValue() {
-        return -1;
-    }
+    public abstract int getValue() ;
+    
     public String getActionType() {
         return null;
     }
