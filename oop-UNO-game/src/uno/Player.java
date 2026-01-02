@@ -29,9 +29,16 @@ public class Player {
 	  }
   }
   	  
+  public Card seeCard(int index) {
+	    if (index >= 0 && index < hand.size()) {
+	        return hand.get(index);
+	    }
+	    return null;
+	}
+  
   public Card playCard(int index){
-	  if(index >= 1 && index <= hand.size() ) {
-		  return hand.remove(index -1);
+	  if(index >= 0 && index <= hand.size() ) {
+		  return hand.remove(index);
 	  }
 		  return null;
   }
