@@ -5,8 +5,10 @@ public class Plus2Card extends ActionCard {
     public Plus2Card(Color color) {
         super(color);
     }
-
-    public void apply(Game game, Deck deck) {
+    
+    @Override
+    public void effect(Game game) {
+    	
        
     }
 
@@ -19,7 +21,6 @@ public class Plus2Card extends ActionCard {
 			return true;
 			
 		}else return false;
-		
 		
 	}
 }
