@@ -3,23 +3,22 @@ package uno;
 import java.util.ArrayList;
 
 public class Bot extends Player {
-
     public Bot(String name) {
         super(name);
     }
-
-    public Card easyTurn(Game game) {
-        for (Card card : getHand()) {
-            if (card.canBePlayed(game)) {
-                getHand().remove(card);
-                if (card instanceof WildCard) {
-                	
-                }
-                
-                return card;
+    public int easyTurn(Game game) { 
+        for (int i = 0; i < getHandSize(); i++) {
+            if (seeCard(i).canBePlayed(game)) {
+                return i; 
             }
         }
-        drawCard(game.getDeck());
-        return null;
+        return -1; 
     }
-}
+    public int easyColor(Game game) {
+    	int rand = (int)(Math.random() * 4) + 1;
+    	return rand;
+    }
+
+    
+    }
+   
