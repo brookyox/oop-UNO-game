@@ -1,6 +1,6 @@
 package uno;
 
-public class ActionCard extends Card {
+public abstract class ActionCard extends Card {
 
     private Color color;
 
@@ -27,4 +27,7 @@ public class ActionCard extends Card {
     public String getActionType() {
         return "ACTION"; // default, to override in subclasses
     }
+
+	@Override
+	public abstract boolean canBePlayed(Game game);
 }

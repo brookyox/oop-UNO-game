@@ -6,6 +6,22 @@ public class BlockCard extends ActionCard {
 		super(color);
 		
 	}
-	public void Block(Game game) {}
+	public int Block(int i ) {
+		return i++;
+		
+	}
+	@Override
+	public boolean canBePlayed(Game game) {
+		Card top = game.getTop();
+		Color topcolor = game.getTopColor();
+		
+		if(this.getColor() == topcolor || top instanceof BlockCard ) {
+			return true;
+			
+		}else return false;
+		
+		
+	}
+
 
 }

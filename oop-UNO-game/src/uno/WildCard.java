@@ -50,5 +50,10 @@ public class WildCard extends Card {
         }
 
     }
+	@Override
+	public boolean canBePlayed(Game game) {
+		
+		return true;
+	}
 
 }

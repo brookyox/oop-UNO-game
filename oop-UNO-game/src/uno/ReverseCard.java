@@ -6,13 +6,21 @@ public class ReverseCard extends ActionCard {
         super(color);
     }
 
-    @Override
-    public String getActionType() {
-        return "REVERSE";
-    }
-
     public void apply(Game game) {
         int d = -game.getDirection();
         game.setDirection(d);
     }
+
+	@Override
+	public boolean canBePlayed(Game game) {
+		Card top = game.getTop();
+		Color topcolor = game.getTopColor();
+		
+		if(this.getColor() == topcolor || top instanceof ReverseCard ) {
+			return true;
+			
+		}else return false;
+		
+		
+	}
 }

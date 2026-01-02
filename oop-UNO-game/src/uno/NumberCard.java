@@ -24,4 +24,17 @@ public class NumberCard extends Card {
     public int getValue() {
         return number;
     }
+
+	@Override
+	public boolean canBePlayed(Game game) {
+		Card top = game.getTop();
+		Color topcolor = game.getTopColor();
+		
+		if(this.color == topcolor || (top instanceof NumberCard && this.getValue() == top.getValue() )) {
+			return true;
+			
+		}else return false;
+		
+		
+	}
 }

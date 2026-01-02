@@ -6,12 +6,20 @@ public class Plus2Card extends ActionCard {
         super(color);
     }
 
-    @Override
-    public String getActionType() {
-        return "+2";
-    }
-
     public void apply(Game game, Deck deck) {
        
     }
+
+	@Override
+	public boolean canBePlayed(Game game) {
+		Card top = game.getTop();
+		Color topcolor = game.getTopColor();
+		
+		if(this.getColor() == topcolor || top instanceof Plus2Card ) {
+			return true;
+			
+		}else return false;
+		
+		
+	}
 }
