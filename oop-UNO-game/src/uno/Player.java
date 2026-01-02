@@ -1,4 +1,4 @@
-package uno;
+ package uno;
 
 import java.util.ArrayList;
 
@@ -26,9 +26,9 @@ public class Player {
 	  if (!deck.isEmpty()) {
 		  Card card  = deck.pop();
 		  hand.add(card);
+		  
 	  }
-  }
-  	  
+  } 
   public Card seeCard(int index) {
 	    if (index >= 0 && index < hand.size()) {
 	        return hand.get(index);

@@ -1,5 +1,5 @@
 package uno;
-
+import java.util.ArrayList;
 import java.util.Stack;
 import java.util.Scanner;
 
@@ -109,16 +109,30 @@ public class Game {
 		}
 	}
 
-	public void applyEffect() {
 
-	}
 
 	public void checkWinCond() {
 
 	}
 
-	public void nextPlayer() {
-
+	
+    public void applyEffect() {
+    	
+    }
+    public boolean checkWinCond(Player[] players) {
+    	ArrayList<Card> hand;
+    	for (int i = 0; i < 4 ; i++) {
+    		hand = players[i].getHand();
+    		if ( hand.size() == 0)return true;
+    	}
+		return false;
+    	
+    	
+    }
+    
+	public void nextPlayer(int currentplayer) {
+		this.currentPlayer = currentplayer + 1;
+		
 	}
 
 	public void endGame() {
