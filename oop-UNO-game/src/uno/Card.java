@@ -6,13 +6,14 @@ public abstract class Card {
 
     public abstract Color getColor();
 
-    public int getValue() {
-        return -1;
-    }
+    
     public String getActionType() {
         return null;
     }
 
     public abstract boolean canBePlayed(Game game);
+
+	public abstract int getValue() ;
+	
 }
 

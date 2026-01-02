@@ -19,11 +19,6 @@ public abstract class ActionCard extends Card {
     }
 
     @Override
-    public int getValue() {
-        return -1; // ActionCards don't have numbers
-    }
-
-    @Override
     public String getActionType() {
         return "ACTION"; // default, to override in subclasses
     }

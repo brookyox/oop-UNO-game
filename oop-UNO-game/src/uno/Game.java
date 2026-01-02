@@ -53,7 +53,7 @@ public class Game {
 	}
 
 	public void playTurn() {
-		
+		 
 	}
     public void applyEffect() {
     	

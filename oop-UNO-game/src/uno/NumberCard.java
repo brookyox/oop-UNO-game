@@ -20,12 +20,10 @@ public class NumberCard extends Card {
         return color;
     }
 
-    @Override
     public int getValue() {
         return number;
     }
 
-	@Override
 	public boolean canBePlayed(Game game) {
 		Card top = game.getTop();
 		Color topcolor = game.getTopColor();
