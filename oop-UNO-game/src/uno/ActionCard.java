@@ -31,6 +31,7 @@ public abstract class ActionCard extends Card {
 	@Override
 	public abstract boolean canBePlayed(Game game);
 	
+	
 	public abstract void effect(Game game);
 }
 
