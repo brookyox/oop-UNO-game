@@ -47,6 +47,7 @@ public class Game {
 		this.players = players;
 		this.disCard = new Stack<>();
 		this.direction = 1;
+		this.deck = deck;
 	}
 
 	public void start() {
@@ -76,8 +77,8 @@ public class Game {
 	public void playTurn() {
 		Player current = players[currentPlayer];
 		
-		System.out.println("it's" + current.getName() + "'s turn.");
-		System.out.println("top card is : " + top);
+		System.out.println("it's " + current.getName() + "'s turn.");
+		System.out.println("top card is : " + top.toString());
 		if(current.isHuman() == true) {
 		System.out.print("press Enter to show hand...");
 		scanner.nextLine();
@@ -88,11 +89,9 @@ public class Game {
 		int drawAllowed=0; //only one draw allowed 
 		boolean turnfinish =false;
 		while (turnfinish == false) {
-			System.out.print("choose the index of the card you want to play or choose 0 to draw a card  : ");// index
-																												// start
-																												// from
-																												// 1
 			current.showHand();
+			System.out.print("choose the index of the card you want to play or choose 0 to draw a card  : ");// index start from 1
+																												
 			int choice = scanner.nextInt() - 1;
 			if (choice >= 0 && choice < current.getHandSize()) {
 				Card selectedCard = current.seeCard(choice);
