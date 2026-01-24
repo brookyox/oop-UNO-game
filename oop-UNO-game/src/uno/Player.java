@@ -8,10 +8,10 @@ public class Player {
 	private ArrayList<Card> hand;
 	private boolean isHuman ;
 
-	public Player(String name) {
+	public Player(String name, boolean b) {
 		this.name = name;
 		this.hand = new ArrayList<>();
-		this.isHuman = true;
+		this.isHuman = b;
 	}
 
 	public String getName() {

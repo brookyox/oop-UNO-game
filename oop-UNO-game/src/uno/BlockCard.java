@@ -25,6 +25,11 @@ public class BlockCard extends ActionCard {
 		
 		
 	}
+	@Override
+	public String toString() {
+		
+		return getColor() + " SKIP";
+	}
 
 
 }

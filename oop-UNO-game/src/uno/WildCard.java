@@ -60,5 +60,10 @@ public class WildCard extends Card {
 		// TODO Auto-generated method stub
 		return -1;
 	}
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 
 }

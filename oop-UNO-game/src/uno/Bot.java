@@ -1,12 +1,12 @@
 package uno;
 
-import java.util.ArrayList;
-
 public class Bot extends Player {
-    public Bot(String name) {
-        super(name);
-    }
-    public int easyTurn(Game game) { 
+
+    public Bot(String name, boolean b) {
+		super(name, b);
+		
+	}
+	public int easyTurn(Game game) { 
         for (int i = 0; i < getHandSize(); i++) {
             if (seeCard(i).canBePlayed(game)) {
                 return i; 

@@ -28,4 +28,10 @@ public class Plus2Card extends ActionCard {
 		}else return false;
 		
 	}
+
+	@Override
+	public String toString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }
