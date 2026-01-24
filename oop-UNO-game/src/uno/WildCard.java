@@ -28,7 +28,7 @@ public class WildCard extends Card {
         do {   
             while (!sc.hasNextInt()) {   // input validation
                 System.out.println("Please enter a number between 1 and 4.");
-                sc.next();  // discard invalid input
+                sc.next();  // discard invalid input 
             }
             n = sc.nextInt();
         } while (n < 1 || n > 4);
@@ -62,8 +62,8 @@ public class WildCard extends Card {
 	}
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return "JOKER";
 	}
 
 }

@@ -31,7 +31,7 @@ public class Plus2Card extends ActionCard {
 
 	@Override
 	public String toString() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return getColor() + " +2";
 	}
 }
