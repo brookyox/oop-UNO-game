@@ -153,7 +153,7 @@ public class Game {
         this.currentPlayer = (this.currentPlayer + this.direction + 4) % 4;
     }
     public Player getNextPlayer() {
-        int nextIndex = (this.currentPlayer + this.direction + 4) % players.length;
+        int nextIndex = (this.currentPlayer + this.direction + 4) % 4;
         return players[nextIndex];
     }
 
