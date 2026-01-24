@@ -99,6 +99,7 @@ public class Game {
 					System.out.println("the selected card can be play.");
 					current.playCard(choice);
 					System.out.println(current.getName() + "played his turn");
+					disCard.push(selectedCard);
 					top = selectedCard;                             
 					this.applyEffect();
 					topColor = top.getColor();
@@ -113,10 +114,18 @@ public class Game {
 				turnfinish = true;
 			} else if (choice == -1 && drawAllowed == 0) {
 				System.out.println("you are going to draw a card");
+				if (deck.isEmpty()) {
+					Card last = disCard.pop(); 
+					while (!disCard.isEmpty()) {
+					    deck.push(disCard.pop());
+					}
+					disCard.push(last); 
+				    }
 				current.drawCard(deck);
 				drawAllowed = 1;
 			}
 		}
+		this.nextPlayer();
 	}
 
 
@@ -124,10 +133,10 @@ public class Game {
     public void applyEffect() {
     	if(this.top instanceof ActionCard ) {
     		((ActionCard) this.top).effect(this);
-    	}else if(this.top instanceof WildCard ) {
-    		((WildCard) this.top).changeColor(this);
     	}else if(this.top instanceof Wild4Card ) {
     		((Wild4Card) this.top).draw4(this);
+    	}else if(this.top instanceof WildCard ) {
+    		((WildCard) this.top).changeColor(this);
     	}
     	
     }
@@ -139,9 +148,9 @@ public class Game {
     	
     }
     
-	public void nextPlayer(int currentplayer) {
-		this.currentPlayer = currentplayer + 1;
-	}
+    public void nextPlayer() {
+        this.currentPlayer = (this.currentPlayer + this.direction + 4) % 4;
+    }
 
 	public boolean  endGame(Player player ) {
 		if (this.checkWinCond(player))  return true;
@@ -155,6 +164,10 @@ public class Game {
 
 	public Player getPlayer(int index) {
 	    return players[index];
+	}
+
+	public Stack<Card>  getDisCard() {
+		return disCard;
 	}	
 	
 }
