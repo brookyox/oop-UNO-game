@@ -8,9 +8,9 @@ public class BlockCard extends ActionCard {
 	}
 	@Override
 	public void effect (Game game ) {
-		int i = game.getCurrentPlayer() + game.getDirection();
+		int index = (game.getCurrentPlayer() + 2* game.getDirection() + 4) % 4;
 		
-		game.setCurrentPlayer(i);
+		game.setCurrentPlayer(index);
 		
 	}
 	@Override

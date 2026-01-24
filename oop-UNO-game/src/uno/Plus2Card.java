@@ -8,13 +8,28 @@ public class Plus2Card extends ActionCard {
     
     @Override
     public void effect(Game game) {
-    	int index = game.getCurrentPlayer() + game.getDirection();
-    	Player player = game.getPlayer(index);
-    	Deck deck = game.getDeck();
-    	
-    	player.drawCard(deck); 
-    	player.drawCard(deck); 
-       
+        
+        int nextIndex = (game.getCurrentPlayer() + game.getDirection() + 4) % 4;
+        Player nextPlayer = game.getPlayer(nextIndex);
+        Deck deck = game.getDeck();
+
+        
+        for (int i = 0; i < 2; i++) {
+            
+            if (deck.isEmpty()) {
+                if (!game.getDisCard().isEmpty()) {
+                    Card last = game.getDisCard().pop(); 
+                    while (!game.getDisCard().isEmpty()) {
+                        deck.push(game.getDisCard().pop());
+                    }
+                    game.getDisCard().push(last);
+                }
+            }
+            
+            nextPlayer.drawCard(deck);
+        }
+
+        System.out.println(nextPlayer.getName() + " drew 2 cards.");
     }
 
 	@Override

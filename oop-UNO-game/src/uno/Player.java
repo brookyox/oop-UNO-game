@@ -43,13 +43,13 @@ public class Player {
 	}
   
   public Card playCard(int index){
-	  if(index >= 0 && index <= hand.size() ) {
+	  if(index >= 0 && index < hand.size() ) {
 		  return hand.remove(index);
 	  }
 		  return null;
   }
   public void showHand() {
-      for (int i = 0; i < hand.size(); i++) {
+      for (int i = 1; i < hand.size(); i++) {
           System.out.println(i + " : " + hand.get(i));
       }
   }
