@@ -49,8 +49,8 @@ public class Player {
 		  return null;
   }
   public void showHand() {
-      for (int i = 1; i < hand.size(); i++) {
-          System.out.println(i + " : " + hand.get(i));
+      for (int i = 0; i < hand.size(); i++) {
+          System.out.println((i + 1) + " : " + hand.get(i));
       }
   }
 }

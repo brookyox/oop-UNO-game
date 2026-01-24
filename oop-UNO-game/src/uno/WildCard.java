@@ -57,7 +57,7 @@ public class WildCard extends Card {
 	}
 	@Override
 	public int getValue() {
-		// TODO Auto-generated method stub
+		
 		return -1;
 	}
 	@Override

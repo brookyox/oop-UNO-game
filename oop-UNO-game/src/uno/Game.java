@@ -93,12 +93,13 @@ public class Game {
 			System.out.print("choose the index of the card you want to play or choose 0 to draw a card  : ");// index start from 1
 																												
 			int choice = scanner.nextInt() - 1;
+			scanner.nextLine();
 			if (choice >= 0 && choice < current.getHandSize()) {
 				Card selectedCard = current.seeCard(choice);
 				if (selectedCard.canBePlayed(this)) {
 					System.out.println("the selected card can be play.");
 					current.playCard(choice);
-					System.out.println(current.getName() + "played his turn");
+					System.out.println(current.getName() + " played his turn");
 					disCard.push(selectedCard);
 					top = selectedCard;                             
 					this.applyEffect();
