@@ -122,6 +122,13 @@ public class Game {
 
 	
     public void applyEffect() {
+    	if(this.top instanceof ActionCard ) {
+    		((ActionCard) this.top).effect(this);
+    	}else if(this.top instanceof WildCard ) {
+    		((WildCard) this.top).changeColor(this);
+    	}else if(this.top instanceof Wild4Card ) {
+    		((Wild4Card) this.top).draw4(this);
+    	}
     	
     }
     public boolean checkWinCond(Player player) {
