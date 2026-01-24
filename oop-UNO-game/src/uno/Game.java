@@ -9,7 +9,7 @@ public class Game {
 	private Stack<Card> disCard;
 	private int direction;
 	private int currentPlayer;
-	private Card top = disCard.peek();
+	private Card top;
 	private Color topColor;
 
 
@@ -69,6 +69,8 @@ public class Game {
 			deck.push(temp);
 		}
 		disCard.push(first);
+		top = first;
+		topColor = first.getColor();
 	}
 
 	public void playTurn() {
@@ -98,9 +100,12 @@ public class Game {
 					System.out.println("the selected card can be play.");
 					current.playCard(choice);
 					System.out.println(current.getName() + "played his turn");
-					turnfinish = true;
+					top = selectedCard;                             
 					this.applyEffect();
+					topColor = top.getColor();
+					turnfinish = true;
 					this.checkWinCond(current);
+					
 				} else {
 					System.out.println("Index invalid or This card cannot be played please chooose another one .");
 				}

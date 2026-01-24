@@ -1,6 +1,6 @@
 package uno;
 
-public class Wild4Card extends WildCard {
+public  class Wild4Card extends WildCard {
 	public Wild4Card() {
 		super();
 	}
