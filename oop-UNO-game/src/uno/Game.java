@@ -151,6 +151,10 @@ public class Game {
     public void nextPlayer() {
         this.currentPlayer = (this.currentPlayer + this.direction + 4) % 4;
     }
+    public Player getNextPlayer() {
+        int nextIndex = (this.currentPlayer + this.direction + 4) % players.length;
+        return players[nextIndex];
+    }
 
 	public boolean  endGame(Player player ) {
 		if (this.checkWinCond(player))  return true;
