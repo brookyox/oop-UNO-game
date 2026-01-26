@@ -95,9 +95,12 @@ public class Game {
 			while (!turnFinished) {
 
 				switch (difficulty) {
-				case 1 -> choice = bot.easyTurn(this);
-				case 2 -> choice = bot.mediumTurn(this);
-				case 3 -> choice = bot.HardTurn(this);
+				case 1 : choice = bot.easyTurn(this);
+				break;
+				case 2 : choice = bot.mediumTurn(this);
+				break;
+				case 3 : choice = bot.HardTurn(this);
+				break;
 				}
 
 				if (choice == -1 && drawAllowed == 0) {
