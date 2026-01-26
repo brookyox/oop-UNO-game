@@ -7,6 +7,7 @@ public class Player {
 	private String name;
 	private ArrayList<Card> hand;
 	private boolean isHuman ;
+	private int drawCounter = 0;
 
 	public Player(String name, boolean b) {
 		this.name = name;
@@ -32,7 +33,7 @@ public class Player {
 	  if (!deck.isEmpty()) {
 		  Card card  = deck.pop();
 		  hand.add(card);
-		  
+		  drawCounter++;
 	  }
   } 
   public Card seeCard(int index) {
