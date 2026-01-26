@@ -100,7 +100,6 @@ public class Game {
 				top = selectedCard;
 				applyEffectBot(this,bot);
 				turnfinish = true;
-				this.checkWinCond(bot);
 			if (choice == -1) {
 				System.out.println(bot.getName() + " draws a card");
 
@@ -158,6 +157,7 @@ public class Game {
 
 			
 			}
+			this.checkWinCond(bot);
 			this.nextPlayer();
 			return;
 		} else if (current.isHuman() == true) {
@@ -185,8 +185,8 @@ public class Game {
 						System.out.println(current.getName() + " played his turn");
 						disCard.push(selectedCard);
 						top = selectedCard;
-						this.applyEffect();
 						topColor = top.getColor();
+						this.applyEffect();
 						turnfinish = true;
 						this.checkWinCond(current);
 
@@ -211,6 +211,7 @@ public class Game {
 			}
 			this.nextPlayer();
 		}
+		drawAllowed =0;
 
 	}
 
