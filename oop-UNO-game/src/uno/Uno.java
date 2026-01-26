@@ -27,7 +27,7 @@ public class Uno {
 			players[i] = new Player(name, true);
 		}
 		for (int i = nbHumanPlayers; i < 4; i++) {
-			players[i] = new Player("Bot " + (i + 1), false);
+			players[i] = new Bot("Bot " + (i + 1), false);
 		}
 
 		Deck deck = new Deck();

@@ -49,7 +49,7 @@ public class WildCard extends Card {
 			break;
 
 		}
-     sc.close();
+     
 	}
 
 	public void changeColorBot(Game game,  Bot bot) {
