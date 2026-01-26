@@ -27,13 +27,13 @@ public class Bot extends Player {
                if (card instanceof ActionCard) {
             	   priority = 1;//prioritize action cards
                }
-               if (card instanceof NumberCard && priority != 1) {
+               else if (card instanceof NumberCard && priority != 1) {
             	   priority = 2;//uses number cards as a second priority
                }
-               if (card instanceof Wild4Card && priority != 1 && priority != 2) {
+               else if (card instanceof Wild4Card && priority != 1 && priority != 2) {
             	   priority = 3;//uses wild4cards and wild cards as a last resort
                }
-               if (card instanceof WildCard && priority != 1 && priority != 2 && priority != 3) {
+               else if (card instanceof WildCard && priority != 1 && priority != 2 && priority != 3) {
             	   priority = 4;//prioritize wild4cards because of the +4 effect
                }
             }
@@ -46,17 +46,17 @@ public class Bot extends Player {
     	            	   return i;
     	               }
     			}
-    			if (priority == 2) {
+    			else if (priority == 2) {
     				if (card instanceof NumberCard) {
     	            	   return i;
     	               }
     			}
-    			if (priority == 3) {
+    			else if (priority == 3) {
     				if (card instanceof Wild4Card) {
     	            	   return i;
     	               }
     			}
-    			if (priority == 4) {
+    			else if (priority == 4) {
     				return i;
     			}
     		}
@@ -66,7 +66,7 @@ public class Bot extends Player {
     
     public int mediumColor(Game game) {
     	for (int i = 0; i < getHandSize(); i++) {
-            if (seeCard(i).canBePlayed(game) && !(seeCard(i) instanceof WildCard)) {
+            if (!(seeCard(i) instanceof WildCard)) {
             	Card card = seeCard(i);
             	if (card.getColor() == Color.RED){
                 	return 1;
@@ -95,16 +95,16 @@ public class Bot extends Player {
     	int yellow=0;
     	for (int i = 0; i < getHandSize(); i++) {
         	Card card = seeCard(i);
-    		if (card.getColor() == Color.RED){
+        	if (card.getColor() == Color.RED){
             	red ++;
             }
-        	if (card.getColor() == Color.BLUE){
+        	else if (card.getColor() == Color.BLUE){
             	blue++;
         	}
-        	if (card.getColor() == Color.GREEN){
+        	else if (card.getColor() == Color.GREEN){
             	green++;
         	}
-        	if (card.getColor() == Color.YELLOW){
+        	else if (card.getColor() == Color.YELLOW){
             	yellow++;
         	}
         }
@@ -114,13 +114,13 @@ public class Bot extends Player {
             	if (danger && (card instanceof ActionCard || card instanceof Wild4Card)){
             		priority = 1;
             	}
-                if (card instanceof NumberCard && priority != 1) {
+            	else if (card instanceof NumberCard && priority != 1) {
              	   priority = 2;
                 }
-                if (card instanceof ActionCard && !danger && priority != 1 && priority != 2) {
+            	else if (card instanceof ActionCard && !danger && priority != 1 && priority != 2) {
              	   priority = 3;
                 }
-                if (card instanceof WildCard && !danger && priority != 1 && priority != 2 && priority != 3) {
+            	else if (card instanceof WildCard && !danger && priority != 1 && priority != 2 && priority != 3) {
              	   priority = 4;
                 }
             }
@@ -134,7 +134,7 @@ public class Bot extends Player {
     	            	   return i;
     	               }
     			}
-    	    	if (priority == 2 || priority == 3) {
+    			else if (priority == 2 || priority == 3) {
     	    		int[] colors = {1, 2, 3, 4}; // 1=red, 2=blue, 3=green, 4=yellow
     	    		
     	    		for (int j = 0; j < 3; j++) {
@@ -198,7 +198,7 @@ public class Bot extends Player {
     	    			    }
     	    			}
     	    		}
-    			if (priority == 3) {
+    	    		else if (priority == 3) {
     				if (card instanceof ActionCard) {
 	    			    for (int l = 0; l < colors.length; l++) {
 	    			        int preferredColor = colors[l]; // 1=RED, 2=BLUE, 3=GREEN, 4=YELLOW
@@ -227,11 +227,11 @@ public class Bot extends Player {
 	    			        }
 	    			    }
     	               }
+    	    		}
     			}
-    			if (priority == 4) {
+    			else if (priority == 4) {
     				return i;
     				}
-    	    	}
     		}
     	}
         return -1; 
@@ -246,13 +246,13 @@ public class Bot extends Player {
     		if (card.getColor() == Color.RED){
             	red ++;
             }
-        	if (card.getColor() == Color.BLUE){
+    		else if (card.getColor() == Color.BLUE){
             	blue++;
         	}
-        	if (card.getColor() == Color.GREEN){
+    		else if (card.getColor() == Color.GREEN){
             	green++;
         	}
-        	if (card.getColor() == Color.YELLOW){
+    		else if (card.getColor() == Color.YELLOW){
             	yellow++;
         	}
     	}
@@ -261,22 +261,22 @@ public class Bot extends Player {
     	if (blue > max) {
     	    max = blue;
     	}
-    	if (green > max) {
+    	else if (green > max) {
     	    max = green;
     	}
-    	if (yellow > max) {
+    	else if (yellow > max) {
     	    max = yellow;
     	}
-    	if (max == red) {
+    	else if (max == red) {
     		return 1;
     	}
-    	if (max == blue) {
+    	else if (max == blue) {
     		return 2;
     	}
-    	if (max == green) {
+    	else if (max == green) {
     		return 3;
     	}
-    	if (max == yellow) {
+    	else if (max == yellow) {
     		return 4;
     	}
     	int rand = (int)(Math.random() * 4) + 1;
