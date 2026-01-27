@@ -31,7 +31,7 @@ public class Uno {
             int nbHumanPlayers;
 
             do {
-              System.out.print("Enter number of Human players (max 4) ");
+              System.out.print("Enter number of Human players (<= 4): ");
               nbHumanPlayers = scanner.nextInt();
             } while (nbHumanPlayers < 0 || nbHumanPlayers > 4);
 
@@ -48,13 +48,14 @@ public class Uno {
               players[i] = new Bot("Bot " + (i + 1), false);
 
             if (nbHumanPlayers != 4) {
-              System.out.println("Enter the difficulty of the bots:\n");
+              System.out.println("Enter the difficulty of the bots: ");
               diff = scanner.nextInt();
             }
+
             createdPlayers = true;
           } else
-            for (int i = 0; i < 4; i++)
-              players[i].resetDrawCounter();
+            for (Player player : players)
+              player.resetDrawCounter();
 
           Deck deck = new Deck();
           deck.shuffle();
