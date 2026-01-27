@@ -83,17 +83,17 @@ public class Bot extends Player {
 
   public int mediumColor(Game game) {
     for (Card card : getHand())
-    		if (!(card instanceof WildCard))
-	      switch (card.getColor()) {
-	        case RED:
-	          return 1;
-	        case BLUE:
-	          return 2;
-	        case GREEN:
-	          return 3;
-	        case YELLOW:
-	          return 4;
-	      }
+      if (!(card instanceof WildCard))
+        switch (card.getColor()) {
+          case RED:
+            return 1;
+          case BLUE:
+            return 2;
+          case GREEN:
+            return 3;
+          case YELLOW:
+            return 4;
+        }
 
     int rand = (int) (Math.random() * 4) + 1;
     return rand;// chose a random color
@@ -176,21 +176,19 @@ public class Bot extends Player {
 
   public int hardColor(Game game) {
     ArrayList<Color> sortedColors = getColorsByFrequency(this.getHand());
-    Color mostFrequentColor = sortedColors.get(0);
-    
-    if (mostFrequentColor != null)  	
-	    switch (sortedColors.get(0)) {
-	      case RED:
-	        return 1;
-	      case BLUE:
-	        return 2;
-	      case GREEN:
-	        return 3;
-	      case YELLOW:
-	        return 4;
-	    }
-    
-    return (int) (Math.random() * 4) + 1;
 
+    if (sortedColors.size() > 0)
+      switch (sortedColors.get(0)) {
+        case RED:
+          return 1;
+        case BLUE:
+          return 2;
+        case GREEN:
+          return 3;
+        case YELLOW:
+          return 4;
+      }
+
+    return (int) (Math.random() * 4) + 1;
   }
 }
