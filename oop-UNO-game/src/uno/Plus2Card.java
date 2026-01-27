@@ -21,14 +21,12 @@ public class Plus2Card extends ActionCard {
 
   @Override
   public boolean canBePlayed(Game game) {
-    Card top = game.getTop();
-    Color topcolor = game.getTopColor();
-
-    return this.getColor() == topcolor || top instanceof Plus2Card;
+    Card topCard = game.getTopCard();
+    return super.canBePlayed(game) || topCard instanceof Plus2Card;
   }
 
   @Override
   public String toString() {
-    return getColor() + " +2";
+    return super.toString() + " +2";
   }
 }

@@ -4,40 +4,40 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bot extends Player {
-  private int difficulty; // 1: easy, 2: medium, 3: hard
+  private Difficulty difficulty;
 
-  public Bot(String name, int difficulty) {
+  public Bot(String name, Difficulty difficulty) {
     super(name, false);
     this.difficulty = difficulty;
   }
 
-  public int getDifficulty() {
+  public Difficulty getDifficulty() {
     return difficulty;
   }
 
   public int chooseCard(Game game) {
     switch (difficulty) {
-      case 1:
+      case EASY:
         return easyChoice(game);
-      case 2:
+      case MEDIUM:
         return mediumChoice(game);
-      case 3:
+      case HARD:
         return hardChoice(game);
       default:
-        return -1;
+        throw new IllegalStateException("Unexpected value: " + difficulty);
     }
   }
 
-  public int chooseColor(Game game) {
+  public Color chooseColor(Game game) {
     switch (difficulty) {
-      case 1:
+      case EASY:
         return easyColor(game);
-      case 2:
+      case MEDIUM:
         return mediumColor(game);
-      case 3:
+      case HARD:
         return hardColor(game);
       default:
-        return -1;
+        throw new IllegalStateException("Unexpected value: " + difficulty);
     }
   }
 
@@ -49,9 +49,8 @@ public class Bot extends Player {
     return -1;
   }
 
-  public int easyColor(Game game) {
-    int rand = (int) (Math.random() * 4) + 1;
-    return rand; // chose a random color
+  public Color easyColor(Game game) {
+    return Color.randomColor(); // chose a random color
   }
 
   public int mediumChoice(Game game) {
@@ -81,22 +80,12 @@ public class Bot extends Player {
     return cardIndex;
   }
 
-  public int mediumColor(Game game) {
+  public Color mediumColor(Game game) {
     for (Card card : getHand())
-    		if (!(card instanceof WildCard))
-	      switch (card.getColor()) {
-	        case RED:
-	          return 1;
-	        case BLUE:
-	          return 2;
-	        case GREEN:
-	          return 3;
-	        case YELLOW:
-	          return 4;
-	      }
+      if (card instanceof ColoredCard)
+        return ((ColoredCard) card).getColor();
 
-    int rand = (int) (Math.random() * 4) + 1;
-    return rand;// chose a random color
+    return Color.randomColor(); // chose a random color
   }
 
   public int getDangerCardIndex(Game game) {
@@ -118,7 +107,10 @@ public class Bot extends Player {
 
     // count cards per color
     for (Card card : hand) {
-      Color color = card.getColor();
+      if (!(card instanceof ColoredCard))
+        continue;
+
+      Color color = ((ColoredCard) card).getColor();
       count.put(color, count.getOrDefault(color, 0) + 1);
     }
 
@@ -149,7 +141,7 @@ public class Bot extends Player {
 
       for (int i = 0; i < getHandSize(); i++) {
         Card card = seeCard(i);
-        if (!card.canBePlayed(game) || card.getColor() != color)
+        if (!card.canBePlayed(game) || !(card instanceof ColoredCard) || ((ColoredCard) card).getColor() != color)
           continue;
 
         if (card instanceof NumberCard)
@@ -174,23 +166,8 @@ public class Bot extends Player {
     return -1;
   }
 
-  public int hardColor(Game game) {
+  public Color hardColor(Game game) {
     ArrayList<Color> sortedColors = getColorsByFrequency(this.getHand());
-    Color mostFrequentColor = sortedColors.get(0);
-    
-    if (mostFrequentColor != null)  	
-	    switch (sortedColors.get(0)) {
-	      case RED:
-	        return 1;
-	      case BLUE:
-	        return 2;
-	      case GREEN:
-	        return 3;
-	      case YELLOW:
-	        return 4;
-	    }
-    
-    return (int) (Math.random() * 4) + 1;
-
+    return sortedColors.isEmpty() ? Color.randomColor() : sortedColors.get(0);
   }
 }

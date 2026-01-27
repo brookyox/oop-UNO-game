@@ -10,17 +10,15 @@ public class Game {
   private Stack<Card> disCard;
   private int direction;
   private int currentPlayer;
-  private Card top;
+  private Card topCard;
   private Color topColor;
-  private Scanner scanner;
 
-  public Game(Player[] players, Scanner scanner) {
+  public Game(Player[] players) {
     this.players = players;
     this.disCard = new Stack<Card>();
     this.deck = new Deck();
     deck.shuffle();
     this.direction = 1;
-    this.scanner = scanner;
   }
 
   public int getCurrentPlayer() {
@@ -31,8 +29,8 @@ public class Game {
     this.currentPlayer = currentPlayer;
   }
 
-  public Card getTop() {
-    return top;
+  public Card getTopCard() {
+    return topCard;
   }
 
   public int getDirection() {
@@ -71,11 +69,12 @@ public class Game {
 
   public void startFirstCard() {
     for (int i = deck.size() - 1; i >= 0; i--) {
-      Card card = deck.get(i);
-      if (card instanceof WildCard)
+      if (!(deck.get(i) instanceof ColoredCard))
         continue;
 
-      top = card;
+      ColoredCard card = (ColoredCard) deck.get(i);
+
+      topCard = card;
       topColor = card.getColor();
       deck.remove(i);
       disCard.push(card);
@@ -132,11 +131,11 @@ public class Game {
           selectedCard = bot.seeCard(choice);
           bot.playCard(choice);
           disCard.push(selectedCard);
-          top = selectedCard;
+          topCard = selectedCard;
           applyEffectBot(this, bot);
 
-          if (!(top instanceof WildCard))
-            topColor = top.getColor();
+          if (topCard instanceof ColoredCard)
+            topColor = ((ColoredCard) topCard).getColor();
 
           this.checkWinCond(bot);
           turnFinished = true;
@@ -147,24 +146,25 @@ public class Game {
         }
       }
 
-      if (top != null) {
-        System.out.println("top card is : " + top);
+      if (topCard != null) {
+        System.out.println("top card is : " + topCard);
 
-        if (this.top instanceof WildCard)
+        if (this.topCard instanceof WildCard)
           System.out.println("top color is : " + topColor);
       }
 
       return;
     } else if (current.isHuman() == true) {
+      Scanner scanner = GeneralScanner.getScanner();
       System.out.print("press Enter to show hand...");
       scanner.nextLine();
 
       for (int i = 0; i < 50; i++)
         System.out.println();
 
-      System.out.println("top card is : " + top);
+      System.out.println("top card is : " + topCard);
 
-      if (this.top instanceof WildCard)
+      if (this.topCard instanceof WildCard)
         System.out.println("top color is : " + topColor);
 
       System.out.println("next player is : " + getNextPlayer().getName());
@@ -189,11 +189,11 @@ public class Game {
             current.playCard(choice);
             System.out.println(current.getName() + " played his turn");
             disCard.push(selectedCard);
-            top = selectedCard;
+            topCard = selectedCard;
             this.applyEffect();
 
-            if (!(top instanceof WildCard))
-              topColor = top.getColor();
+            if (topCard instanceof ColoredCard)
+              topColor = ((ColoredCard) topCard).getColor();
 
             turnfinish = true;
             this.checkWinCond(current);
@@ -215,22 +215,22 @@ public class Game {
   }
 
   public void applyEffect() {
-    if (this.top instanceof ActionCard) {
-      ((ActionCard) this.top).effect(this);
-    } else if (this.top instanceof Wild4Card) {
-      ((Wild4Card) this.top).draw4(this, scanner);
-    } else if (this.top instanceof WildCard) {
-      ((WildCard) this.top).changeColor(this, scanner);
+    if (this.topCard instanceof ActionCard) {
+      ((ActionCard) this.topCard).effect(this);
+    } else if (this.topCard instanceof Wild4Card) {
+      ((Wild4Card) this.topCard).draw4(this);
+    } else if (this.topCard instanceof WildCard) {
+      ((WildCard) this.topCard).changeColorPlayer(this);
     }
   }
 
   public void applyEffectBot(Game game, Bot bot) {
-    if (this.top instanceof ActionCard) {
-      ((ActionCard) this.top).effect(game);
-    } else if (this.top instanceof Wild4Card) {
-      ((Wild4Card) this.top).draw4Bot(game, bot);
-    } else if (this.top instanceof WildCard) {
-      ((WildCard) this.top).changeColorBot(game, bot);
+    if (this.topCard instanceof ActionCard) {
+      ((ActionCard) this.topCard).effect(game);
+    } else if (this.topCard instanceof Wild4Card) {
+      ((Wild4Card) this.topCard).draw4Bot(game, bot);
+    } else if (this.topCard instanceof WildCard) {
+      ((WildCard) this.topCard).changeColorBot(game, bot);
     }
   }
 

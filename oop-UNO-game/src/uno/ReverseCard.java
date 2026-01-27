@@ -6,20 +6,17 @@ public class ReverseCard extends ActionCard {
   }
 
   public void effect(Game game) {
-    int d = -game.getDirection();
-    game.setDirection(d);
+    game.setDirection(-game.getDirection());
   }
 
   @Override
   public boolean canBePlayed(Game game) {
-    Card top = game.getTop();
-    Color topcolor = game.getTopColor();
-
-    return this.getColor() == topcolor || top instanceof ReverseCard;
+    Card topCard = game.getTopCard();
+    return super.canBePlayed(game) || topCard instanceof ReverseCard;
   }
 
   @Override
   public String toString() {
-    return getColor() + " REVERSE";
+    return super.toString() + " REVERSE";
   }
 }

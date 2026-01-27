@@ -1,19 +1,12 @@
 package uno;
 
-import java.util.Scanner;
-
 public class Wild4Card extends WildCard {
   public Wild4Card() {
     super();
   }
 
-  @Override
-  public Color getColor() {
-    return null;
-  }
-
-  public void draw4(Game game, Scanner scanner) {
-    this.changeColor(game, scanner);
+  public void draw4(Game game) {
+    this.changeColorPlayer(game);
 
     int index = (game.getCurrentPlayer() + game.getDirection() + 4) % 4;
     Player player = game.getPlayer(index);
