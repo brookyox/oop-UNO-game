@@ -261,22 +261,22 @@ public class Bot extends Player {
     	if (blue > max) {
     	    max = blue;
     	}
-    	else if (green > max) {
+    	 if (green > max) {
     	    max = green;
     	}
-    	else if (yellow > max) {
+    	 if (yellow > max) {
     	    max = yellow;
     	}
-    	else if (max == red) {
+    	 if (max == red) {
     		return 1;
     	}
-    	else if (max == blue) {
+    	 if (max == blue) {
     		return 2;
     	}
-    	else if (max == green) {
+    	 if (max == green) {
     		return 3;
     	}
-    	else if (max == yellow) {
+    	 if (max == yellow) {
     		return 4;
     	}
     	int rand = (int)(Math.random() * 4) + 1;

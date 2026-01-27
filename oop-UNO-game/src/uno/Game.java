@@ -172,7 +172,6 @@ public class Game {
 						System.out.println(current.getName() + " played his turn");
 						disCard.push(selectedCard);
 						top = selectedCard;
-						topColor = top.getColor();
 						this.applyEffect();
 						if (!(top instanceof WildCard)) {
 					        topColor = top.getColor();
@@ -184,7 +183,7 @@ public class Game {
 						System.out.println("Index invalid or This card cannot be played please chooose another one .");
 					}
 				} else if (drawAllowed == 1) {
-					System.out.println("No card played, you skip your tun.");
+					System.out.println("No card played, you skip your turn.");
 					turnfinish = true;
 				} else if (choice == -1 && drawAllowed == 0) {
 					System.out.println("you are going to draw a card");

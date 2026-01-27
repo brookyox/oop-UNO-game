@@ -7,11 +7,9 @@ public class BlockCard extends ActionCard {
 		
 	}
 	@Override
-	public void effect (Game game ) {
-		int index = (game.getCurrentPlayer() +  game.getDirection() + 4) % 4;
-		
-		game.setCurrentPlayer(index);
-		
+	public void effect(Game game) {
+	    game.nextPlayer();
+	    System.out.println("Next player is skipped!");
 	}
 	@Override
 	public boolean canBePlayed(Game game) {
