@@ -17,10 +17,10 @@ public class Player {
     return drawCounter;
   }
 
-  public Player(String name, boolean b) {
+  public Player(String name, boolean isHuman) {
     this.name = name;
     this.hand = new ArrayList<>();
-    this.isHuman = b;
+    this.isHuman = isHuman;
     this.drawCounter = 0;
     this.points = 0;
   }
