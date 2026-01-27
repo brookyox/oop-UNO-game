@@ -5,254 +5,268 @@ import java.util.Stack;
 import java.util.Scanner;
 
 public class Game {
-  private Player[] players = new Player[4];
-  private Deck deck;
-  private Stack<Card> disCard;
-  private int direction;
-  private int currentPlayer;
-  private Card top;
-  private Color topColor;
-  private int difficulty;
+	private Player[] players = new Player[4];
+	private Deck deck;
+	private Stack<Card> disCard;
+	private int direction;
+	private int currentPlayer;
+	private Card top;
+	private Color topColor;
+	private int difficulty;
+	private Scanner scanner;
 
-  Scanner scanner = new Scanner(System.in);
+	
 
-  public int getCurrentPlayer() {
-    return currentPlayer;
-  }
+	public int getCurrentPlayer() {
+		return currentPlayer;
+	}
 
-  public void setCurrentPlayer(int currentPlayer) {
-    this.currentPlayer = currentPlayer;
-  }
+	public void setCurrentPlayer(int currentPlayer) {
+		this.currentPlayer = currentPlayer;
+	}
 
-  public Card getTop() {
-    return top;
-  }
+	public Card getTop() {
+		return top;
+	}
 
-  public int getDirection() {
-    return direction;
-  }
+	public int getDirection() {
+		return direction;
+	}
 
-  public void setDirection(int direction) {
-    this.direction = direction;
-  }
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
 
-  public Color getTopColor() {
-    return topColor;
-  }
+	public Color getTopColor() {
+		return topColor;
+	}
 
-  public void setTopColor(Color topColor) {
-    this.topColor = topColor;
-  }
+	public void setTopColor(Color topColor) {
+		this.topColor = topColor;
+	}
+	public Deck getDeck() {
+		return deck;
+	}
 
-  public Game(Player[] players, Deck deck, int difficulty) {
-    this.players = players;
-    this.disCard = new Stack<>();
-    this.direction = 1;
-    this.deck = deck;
-    this.difficulty = difficulty;
-  }
+	public Player getPlayer(int index) {
+		return players[index];
+	}
 
-  public int getDifficulty() {
-    return difficulty;
-  }
+	public Stack<Card> getDisCard() {
+		return disCard;
+	}
 
-  public void start() {
-    for (Player p : players)
-      for (int i = 0; i < 7; i++)
-        p.drawCard(deck);
-  }
+	public Game(Player[] players, Deck deck, int difficulty, Scanner scanner) {
+		this.players = players;
+		this.disCard = new Stack<>();
+		this.direction = 1;
+		this.deck = deck;
+		this.difficulty = difficulty;
+		this.scanner = scanner;
+	}
 
-  public void StartFirstCard() {
-    Card first = deck.pop();
-    while (first instanceof WildCard) {
-      disCard.push(first);
-      first = deck.pop();
-    }
+	public int getDifficulty() {
+		return difficulty;
+	}
 
-    while (!disCard.isEmpty()) {
-      Card temp = disCard.pop();
-      deck.push(temp);
-    }
+	public void start() {
+		for (Player p : players)
+			for (int i = 0; i < 7; i++)
+				p.drawCard(deck);
+	}
 
-    disCard.push(first);
-    top = first;
-    topColor = first.getColor();
-  }
+	public void StartFirstCard() {
+		Card first = deck.pop();
+		while (first instanceof WildCard) {
+			disCard.push(first);
+			first = deck.pop();
+		}
 
-  public void playTurn() {
-    Player current = players[currentPlayer];
-    int choice = -1;
-    int drawAllowed = 0; // only one draw allowed
-    boolean turnfinish = false;
-    Card selectedCard;
-    System.out.println("it's " + current.getName() + "'s turn.");
+		while (!disCard.isEmpty()) {
+			Card temp = disCard.pop();
+			deck.push(temp);
+		}
 
-    if (!current.isHuman()) {
-      Bot bot = (Bot) current;
+		disCard.push(first);
+		top = first;
+		topColor = first.getColor();
+	}
 
-      boolean turnFinished = false;
+	public void playTurn() {
+		Player current = players[currentPlayer];
+		int choice = -1;
+		int drawAllowed = 0; // only one draw allowed
+		boolean turnfinish = false;
+		Card selectedCard;
+		System.out.println("it's " + current.getName() + "'s turn.");
 
-      while (!turnFinished) {
-        switch (difficulty) {
-          case 1:
-            choice = bot.easyTurn(this);
-            break;
-          case 2:
-            choice = bot.mediumTurn(this);
-            break;
-          case 3:
-            choice = bot.hardTurn(this);
-            break;
-        }
+		if (!current.isHuman()) {
+			Bot bot = (Bot) current;
 
-        if (choice == -1 && drawAllowed == 0) {
-          System.out.println(bot.getName() + " draws a card");
-          if (deck.isEmpty()) {
-            Card last = disCard.pop();
-            while (!disCard.isEmpty()) {
-              deck.push(disCard.pop());
-            }
-            disCard.push(last);
-          }
-          bot.drawCard(deck);
-          drawAllowed = 1;
-        } else if (choice >= 0) {
-          selectedCard = bot.seeCard(choice);
-          bot.playCard(choice);
-          disCard.push(selectedCard);
-          top = selectedCard;
-          applyEffectBot(this, bot);
+			boolean turnFinished = false;
 
-          if (!(top instanceof WildCard))
-            topColor = top.getColor();
+			while (!turnFinished) {
+				botPause(700);
+				System.out.println(bot.getName() + " is thinking...");
+				switch (difficulty) {
+				case 1:
+					choice = bot.easyTurn(this);
+					break;
+				case 2:
+					choice = bot.mediumTurn(this);
+					break;
+				case 3:
+					choice = bot.hardTurn(this);
+					break;
+				}
 
-          this.checkWinCond(bot);
-          turnFinished = true;
-        } else if (choice == -1 && drawAllowed == 1) {
+				if (choice == -1 && drawAllowed == 0) {
+					System.out.println(bot.getName() + " draws a card");
+					if (deck.isEmpty()) {
+						Card last = disCard.pop();
+						while (!disCard.isEmpty()) {
+							deck.push(disCard.pop());
+						}
+						disCard.push(last);
+					}
+					bot.drawCard(deck);
+					drawAllowed = 1;
+				} else if (choice >= 0) {
+					selectedCard = bot.seeCard(choice);
+					bot.playCard(choice);
+					disCard.push(selectedCard);
+					top = selectedCard;
+					applyEffectBot(this, bot);
 
-          System.out.println(bot.getName() + " cannot play, turn skipped");
-          turnFinished = true;
-        }
-      }
+					if (!(top instanceof WildCard))
+						topColor = top.getColor();
 
-      if (top != null) {
-        System.out.println("top card is : " + top.toString());
+					this.checkWinCond(bot);
+					turnFinished = true;
+				} else if (choice == -1 && drawAllowed == 1) {
 
-        if (this.top instanceof WildCard)
-          System.out.println("top color is:" + topColor);
-      }
+					System.out.println(bot.getName() + " cannot play, turn skipped");
+					turnFinished = true;
+				}
+			}
 
-      return;
-    } else if (current.isHuman() == true) {
-      System.out.print("press Enter to show hand...");
-      scanner.nextLine();
+			if (top != null) {
+				System.out.println("top card is : " + top.toString());
 
-      for (int i = 0; i < 10; i++)
-        System.out.println();
+				if (this.top instanceof WildCard)
+					System.out.println("top color is:" + topColor);
+			}
 
-      System.out.println("top card is : " + top.toString());
+			return;
+		} else if (current.isHuman() == true) {
+			System.out.print("press Enter to show hand...");
+			scanner.nextLine();
 
-      if (this.top instanceof WildCard)
-        System.out.println("top color is:" + topColor);
+			for (int i = 0; i < 50; i++)
+				System.out.println();
 
-      while (!turnfinish) {
-        current.showHand();
-        // index start from 1
-        System.out.print("choose the index of the card you want to play or choose 0 to draw a card  : ");
+			System.out.println("top card is : " + top.toString());
 
-        choice = scanner.nextInt() - 1;
-        scanner.nextLine();
-        if (choice >= 0 && choice < current.getHandSize()) {
-          selectedCard = current.seeCard(choice);
-          if (selectedCard.canBePlayed(this)) {
-            System.out.println("the selected card can be played.");
-            current.playCard(choice);
-            System.out.println(current.getName() + " played his turn");
-            disCard.push(selectedCard);
-            top = selectedCard;
-            this.applyEffect();
+			if (this.top instanceof WildCard)
+				System.out.println("top color is:" + topColor);
 
-            if (!(top instanceof WildCard))
-              topColor = top.getColor();
+			System.out.println("next player is : "+ getNextPlayer().getName());
+			while (!turnfinish) {
+				current.showHand();
+				boolean validInput = false;
+				while (!validInput) {
+				    System.out.print("choose the index of the card you want to play or choose 0 to draw a card  : ");
+				    try {
+				        choice = scanner.nextInt() - 1; 
+				        validInput = true; 
+				    } catch (java.util.InputMismatchException e) {
+				        System.out.println("Please enter a valid number.");
+				        scanner.nextLine(); 
+				    }
+				}
+				scanner.nextLine();
+				if (choice >= 0 && choice < current.getHandSize()) {
+					selectedCard = current.seeCard(choice);
+					if (selectedCard.canBePlayed(this)) {
+						System.out.println("the selected card can be played.");
+						current.playCard(choice);
+						System.out.println(current.getName() + " played his turn");
+						disCard.push(selectedCard);
+						top = selectedCard;
+						this.applyEffect();
 
-            turnfinish = true;
-            this.checkWinCond(current);
-          } else
-            System.out.println("Index invalid or This card cannot be played please chooose another one .");
-        } else if (drawAllowed == 1) {
-          System.out.println("No card played, you skip your turn.");
-          turnfinish = true;
-        } else if (choice == -1 && drawAllowed == 0) {
-          System.out.println("you are going to draw a card");
-          if (deck.isEmpty()) {
-            Card last = disCard.pop();
+						if (!(top instanceof WildCard))
+							topColor = top.getColor();
 
-            while (!disCard.isEmpty())
-              deck.push(disCard.pop());
+						turnfinish = true;
+						this.checkWinCond(current);
+					} else
+						System.out.println("Index invalid or This card cannot be played please chooose another one .");
+				} else if (drawAllowed == 1) {
+					System.out.println("No card played, you skip your turn.");
+					turnfinish = true;
+				} else if (choice == -1 && drawAllowed == 0) {
+					System.out.println("you are going to draw a card");
+					if (deck.isEmpty()) {
+						Card last = disCard.pop();
 
-            disCard.push(last);
-          }
+						while (!disCard.isEmpty())
+							deck.push(disCard.pop());
 
-          current.drawCard(deck);
-          drawAllowed = 1;
-        }
-      }
-    }
+						disCard.push(last);
+					}
 
-    drawAllowed = 0;
-  }
+					current.drawCard(deck);
+					drawAllowed = 1;
+				}
+			}
+		}
 
-  public void applyEffect() {
-    if (this.top instanceof ActionCard) {
-      ((ActionCard) this.top).effect(this);
-    } else if (this.top instanceof Wild4Card) {
-      ((Wild4Card) this.top).draw4(this);
-    } else if (this.top instanceof WildCard) {
-      ((WildCard) this.top).changeColor(this);
-    }
-  }
+		drawAllowed = 0;
+	}
 
-  public void applyEffectBot(Game game, Bot bot) {
-    if (this.top instanceof ActionCard) {
-      ((ActionCard) this.top).effect(game);
-    } else if (this.top instanceof Wild4Card) {
-      ((Wild4Card) this.top).draw4Bot(game, bot);
-    } else if (this.top instanceof WildCard) {
-      ((WildCard) this.top).changeColorBot(game, bot);
-    }
-  }
+	public void applyEffect() {
+		if (this.top instanceof ActionCard) {
+			((ActionCard) this.top).effect(this);
+		} else if (this.top instanceof Wild4Card) {
+			((Wild4Card) this.top).draw4(this,scanner);
+		} else if (this.top instanceof WildCard) {
+			((WildCard) this.top).changeColor(this,scanner);
+		}
+	}
 
-  public boolean checkWinCond(Player player) {
-    ArrayList<Card> hand;
-    hand = player.getHand();
-    return hand.size() == 0;
-  }
+	public void applyEffectBot(Game game, Bot bot) {
+		if (this.top instanceof ActionCard) {
+			((ActionCard) this.top).effect(game);
+		} else if (this.top instanceof Wild4Card) {
+			((Wild4Card) this.top).draw4Bot(game, bot);
+		} else if (this.top instanceof WildCard) {
+			((WildCard) this.top).changeColorBot(game, bot);
+		}
+	}
 
-  public void nextPlayer() {
-    this.currentPlayer = (this.currentPlayer + this.direction + 4) % 4;
-  }
+	private void botPause(long ms) {
+		try {
+			Thread.sleep(ms);
+		} catch (InterruptedException e) {
+			Thread.currentThread().interrupt();
+		}
+	}
 
-  public Player getNextPlayer() {
-    int nextIndex = (this.currentPlayer + this.direction + 4) % 4;
-    return players[nextIndex];
-  }
+	public boolean checkWinCond(Player player) {
+		ArrayList<Card> hand;
+		hand = player.getHand();
+		return hand.size() == 0;
+	}
 
-  public boolean endGame(Player player) {
-    if (this.checkWinCond(player))
-      return true;
-    else
-      return false;
-  }
+	public void nextPlayer() {
+		this.currentPlayer = (this.currentPlayer + this.direction + 4) % 4;
+	}
 
-  public Deck getDeck() {
-    return deck;
-  }
+	public Player getNextPlayer() {
+		int nextIndex = (this.currentPlayer + this.direction + 4) % 4;
+		return players[nextIndex];
+	}
 
-  public Player getPlayer(int index) {
-    return players[index];
-  }
-
-  public Stack<Card> getDisCard() {
-    return disCard;
-  }
+	
 }

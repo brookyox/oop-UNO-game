@@ -12,8 +12,7 @@ public class WildCard extends Card {
     return null;
   }
 
-  public void changeColor(Game game) {
-    Scanner sc = new Scanner(System.in);
+  public void changeColor(Game game,Scanner sc) {
 
     int n;
     System.out.println("What is the color for the next player?");
@@ -41,7 +40,6 @@ public class WildCard extends Card {
         break;
     }
 
-    sc.close();
   }
 
   public void changeColorBot(Game game, Bot bot) {

@@ -1,5 +1,5 @@
 package uno;
-
+import java.util.Scanner;
 public class Wild4Card extends WildCard {
   public Wild4Card() {
     super();
@@ -10,8 +10,8 @@ public class Wild4Card extends WildCard {
     return null;
   }
 
-  public void draw4(Game game) {
-    this.changeColor(game);
+  public void draw4(Game game , Scanner scanner) {
+    this.changeColor(game,scanner);
 
     int index = (game.getCurrentPlayer() + game.getDirection() + 4) % 4;
     Player player = game.getPlayer(index);
