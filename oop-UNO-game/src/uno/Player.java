@@ -25,6 +25,10 @@ public class Player {
     this.points = 0;
   }
 
+  public Player(String name) {
+    this(name, true);
+  }
+
   public String getName() {
     return name;
   }

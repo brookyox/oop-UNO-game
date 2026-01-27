@@ -18,7 +18,7 @@ public class Uno {
       System.out.print("Enter player name: ");
       String name = scanner.nextLine();
 
-      players[i] = new Player(name, true);
+      players[i] = new Player(name);
     }
 
     if (nbHumanPlayers != 4) {
