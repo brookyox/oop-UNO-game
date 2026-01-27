@@ -1,52 +1,43 @@
 package uno;
 
 public class Plus2Card extends ActionCard {
+  public Plus2Card(Color color) {
+    super(color);
+  }
 
-    public Plus2Card(Color color) {
-        super(color);
-    }
-    
-    @Override
-    public void effect(Game game) {
-        
-        int nextIndex = (game.getCurrentPlayer() + game.getDirection() + 4) % 4;
-        Player nextPlayer = game.getPlayer(nextIndex);
-        Deck deck = game.getDeck();
+  @Override
+  public void effect(Game game) {
+    int nextIndex = (game.getCurrentPlayer() + game.getDirection() + 4) % 4;
+    Player nextPlayer = game.getPlayer(nextIndex);
+    Deck deck = game.getDeck();
 
-        
-        for (int i = 0; i < 2; i++) {
-            
-            if (deck.isEmpty()) {
-                if (!game.getDisCard().isEmpty()) {
-                    Card last = game.getDisCard().pop(); 
-                    while (!game.getDisCard().isEmpty()) {
-                        deck.push(game.getDisCard().pop());
-                    }
-                    game.getDisCard().push(last);
-                }
-            }
-            
-            nextPlayer.drawCard(deck);
+    for (int i = 0; i < 2; i++) {
+      if (deck.isEmpty())
+        if (!game.getDisCard().isEmpty()) {
+          Card last = game.getDisCard().pop();
+
+          while (!game.getDisCard().isEmpty())
+            deck.push(game.getDisCard().pop());
+
+          game.getDisCard().push(last);
         }
 
-        System.out.println(nextPlayer.getName() + " drew 2 cards.");
+      nextPlayer.drawCard(deck);
     }
 
-	@Override
-	public boolean canBePlayed(Game game) {
-		Card top = game.getTop();
-		Color topcolor = game.getTopColor();
-		
-		if(this.getColor() == topcolor || top instanceof Plus2Card ) {
-			return true;
-			
-		}else return false;
-		
-	}
+    System.out.println(nextPlayer.getName() + " drew 2 cards.");
+  }
 
-	@Override
-	public String toString() {
-		
-		return getColor() + " +2";
-	}
+  @Override
+  public boolean canBePlayed(Game game) {
+    Card top = game.getTop();
+    Color topcolor = game.getTopColor();
+
+    return this.getColor() == topcolor || top instanceof Plus2Card;
+  }
+
+  @Override
+  public String toString() {
+    return getColor() + " +2";
+  }
 }

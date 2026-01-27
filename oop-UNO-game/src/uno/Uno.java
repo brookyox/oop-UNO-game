@@ -4,145 +4,126 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Uno {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
 
-	public static void main(String[] args) {
+    System.out.println("===== THE UNO GAME =====");
+    int cardPlaced;
+    ArrayList<GameSave> saves = new ArrayList<>();
 
-		Scanner scanner = new Scanner(System.in);
+    boolean createdPlayers = false;
+    Player[] players = new Player[4];
+    int diff = 0;
+    int ng = 0;
+    int choice = 0;
 
-		System.out.println("===== THE UNO GAME =====");
-		int cardPlaced;
-		ArrayList<GameSave> saves = new ArrayList<>();
+    do {
+      System.out.println("1: start a party");
+      System.out.println("2: view history ");
+      System.out.println("3: players ranking ");
+      System.out.println("4: exit ");
 
-		
-		boolean createdPlayers = false;
-		Player[] players = new Player[4];
-		int diff = 0;
-		int ng = 0;
-		int choice = 0;
+      choice = scanner.nextInt();
+      scanner.nextLine();
+      switch (choice) {
+        case 1:
+          if (!createdPlayers) {
+            int nbHumanPlayers;
 
-		do{
-			System.out.println("1: start a party");
-			System.out.println("2: view history ");
-			System.out.println("3: players ranking ");
-			System.out.println("4: exit ");
-			
-			choice = scanner.nextInt();
-			scanner.nextLine();
-			switch (choice) {
-			case 1:
+            do {
+              System.out.print("Enter number of Human players (max 4) ");
+              nbHumanPlayers = scanner.nextInt();
+            } while (nbHumanPlayers < 0 || nbHumanPlayers > 4);
 
-				if (!createdPlayers) {
-					int nbHumanPlayers;
-					do {
-						System.out.print("Enter number of Human players (max 4) ");
-						nbHumanPlayers = scanner.nextInt();
-					} while (nbHumanPlayers < 0 || nbHumanPlayers > 4);
+            scanner.nextLine();
 
-					scanner.nextLine();
+            for (int i = 0; i < nbHumanPlayers; i++) {
+              System.out.print("Enter player name: ");
+              String name = scanner.nextLine();
 
-					for (int i = 0; i < nbHumanPlayers; i++) {
+              players[i] = new Player(name, true);
+            }
 
-						System.out.print("Enter player name: ");
-						String name = scanner.nextLine();
+            for (int i = nbHumanPlayers; i < 4; i++)
+              players[i] = new Bot("Bot " + (i + 1), false);
 
-						players[i] = new Player(name, true);
-					}
-					for (int i = nbHumanPlayers; i < 4; i++) {
-						players[i] = new Bot("Bot " + (i + 1), false);
-					}
+            if (nbHumanPlayers != 4) {
+              System.out.println("Enter the difficulty of the bots:\n");
+              diff = scanner.nextInt();
+            }
+            createdPlayers = true;
+          } else
+            for (int i = 0; i < 4; i++)
+              players[i].resetDrawCounter();
 
-					
-					if (nbHumanPlayers != 4) {
-						System.out.println("Enter the difficulty of the bots:\n");
-						diff = scanner.nextInt();
-					}
-					createdPlayers = true;
-				}else {
-					for (int i = 0; i < 4; i++) {
-						players[i].resetDrawCounter();
-					}
-				}
+          Deck deck = new Deck();
+          deck.shuffle();
+          Game game = new Game(players, deck, diff);
+          cardPlaced = 0;
+          ng++;
 
-				Deck deck = new Deck();
-				deck.shuffle();
-				Game game = new Game(players, deck, diff);
-				cardPlaced = 0;
-				ng++;
+          game.start();
+          game.StartFirstCard();
+          game.setCurrentPlayer(0);
 
-				game.start();
+          boolean gameOver = false;
 
-				game.StartFirstCard();
+          while (!gameOver) {
+            game.playTurn();
+            cardPlaced++;
 
-				game.setCurrentPlayer(0);
+            Player current = game.getPlayer(game.getCurrentPlayer());
 
-				boolean gameOver = false;
+            if (game.endGame(current)) {
+              System.out.println("\n GAME OVER ");
+              System.out.println("Winner is: " + current.getName());
+              gameOver = true;
+              current.countPoints(cardPlaced);
 
-				while (!gameOver) {
+              GameSave save = new GameSave(ng, cardPlaced, current);
+              saves.add(save);
+            }
 
-					game.playTurn();
-					cardPlaced++;
+            game.nextPlayer();
+          }
+          break;
+        case 2:
+          if (saves.isEmpty())
+            System.out.println("No game played yet.");
+          else {
+            System.out.println("Game history: ");
+            for (GameSave gs : saves) {
+              gs.Display();
+              System.out.println("------------------------");
+            }
+          }
+          break;
+        case 3:
+          System.out.println("Player ranking: ");
 
-					Player current = game.getPlayer(game.getCurrentPlayer());
+          ArrayList<Player> ranking = new ArrayList<>();
 
-					if (game.endGame(current)) {
-						System.out.println("\n GAME OVER ");
-						System.out.println("Winner is: " + current.getName());
-						gameOver = true;
-						current.countPoints(cardPlaced);
+          for (int i = 0; i < players.length; i++)
+            ranking.add(players[i]);
 
-						GameSave save = new GameSave(ng, cardPlaced, current);
-						saves.add(save);
-						
-					}
-					game.nextPlayer();
-				}
-				break;
-			case 2:
-				if (saves.isEmpty()) {
-					System.out.println("No game played yet.");
-				} else {
-					System.out.println("Game history: ");
-					for (GameSave gs : saves) {
-						gs.Display();
-						System.out.println("------------------------");
-					}
-				}
-				break;
-			case 3:
-			    System.out.println("Player ranking: ");
+          for (int i = 0; i < ranking.size() - 1; i++)
+            for (int j = i + 1; j < ranking.size(); j++)
+              if (ranking.get(j).getPoints() > ranking.get(i).getPoints()) {
+                Player tmp = ranking.get(i);
+                ranking.set(i, ranking.get(j));
+                ranking.set(j, tmp);
+              }
 
-			    ArrayList<Player> ranking = new ArrayList<>();
+          for (int i = 0; i < ranking.size(); i++) {
+            Player p = ranking.get(i);
+            System.out.println((i + 1) + ". " + p.getName() + " | Points: " + p.getPoints());
+          }
 
-			   
-			    for (int i = 0; i < players.length; i++) {
-			        ranking.add(players[i]);
-			    }
+          System.out.println();
+          break;
+      }
+    } while (choice != 4);
 
-			   
-			    for (int i = 0; i < ranking.size() - 1; i++) {
-			        for (int j = i + 1; j < ranking.size(); j++) {
-			            if (ranking.get(j).getPoints() > ranking.get(i).getPoints()) {
-			                Player tmp = ranking.get(i);
-			                ranking.set(i, ranking.get(j));
-			                ranking.set(j, tmp);
-			            }
-			        }
-			    }
-
-			    
-			    for (int i = 0; i < ranking.size(); i++) {
-			        Player p = ranking.get(i);
-			        System.out.println((i + 1) + ". " + p.getName() +" | Points: " + p.getPoints());
-			    }
-
-			    System.out.println();
-			    break;
-
-			}
-
-
-		}while (choice != 4) ;
-
-		scanner.close();
-	}
+    scanner.close();
+  }
 }
