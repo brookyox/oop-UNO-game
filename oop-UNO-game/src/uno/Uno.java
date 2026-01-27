@@ -63,7 +63,7 @@ public class Uno {
 
 				Deck deck = new Deck();
 				deck.shuffle();
-				Game game = new Game(players, deck, diff);
+				Game game = new Game(players, deck, diff,scanner);
 				cardPlaced = 0;
 				ng++;
 

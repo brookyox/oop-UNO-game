@@ -13,8 +13,9 @@ public class Game {
 	private Card top;
 	private Color topColor;
 	private int difficulty;
+	private Scanner scanner;
 
-	Scanner scanner = new Scanner(System.in);
+	
 
 	public int getCurrentPlayer() {
 		return currentPlayer;
@@ -55,12 +56,13 @@ public class Game {
 		return disCard;
 	}
 
-	public Game(Player[] players, Deck deck, int difficulty) {
+	public Game(Player[] players, Deck deck, int difficulty, Scanner scanner) {
 		this.players = players;
 		this.disCard = new Stack<>();
 		this.direction = 1;
 		this.deck = deck;
 		this.difficulty = difficulty;
+		this.scanner = scanner;
 	}
 
 	public int getDifficulty() {
@@ -168,12 +170,20 @@ public class Game {
 			if (this.top instanceof WildCard)
 				System.out.println("top color is:" + topColor);
 
+			System.out.println("next player is : "+ getNextPlayer().getName());
 			while (!turnfinish) {
 				current.showHand();
-				// index start from 1
-				System.out.print("choose the index of the card you want to play or choose 0 to draw a card  : ");
-
-				choice = scanner.nextInt() - 1;
+				boolean validInput = false;
+				while (!validInput) {
+				    System.out.print("choose the index of the card you want to play or choose 0 to draw a card  : ");
+				    try {
+				        choice = scanner.nextInt() - 1; 
+				        validInput = true; 
+				    } catch (java.util.InputMismatchException e) {
+				        System.out.println("Please enter a valid number.");
+				        scanner.nextLine(); 
+				    }
+				}
 				scanner.nextLine();
 				if (choice >= 0 && choice < current.getHandSize()) {
 					selectedCard = current.seeCard(choice);
@@ -219,9 +229,9 @@ public class Game {
 		if (this.top instanceof ActionCard) {
 			((ActionCard) this.top).effect(this);
 		} else if (this.top instanceof Wild4Card) {
-			((Wild4Card) this.top).draw4(this);
+			((Wild4Card) this.top).draw4(this,scanner);
 		} else if (this.top instanceof WildCard) {
-			((WildCard) this.top).changeColor(this);
+			((WildCard) this.top).changeColor(this,scanner);
 		}
 	}
 
