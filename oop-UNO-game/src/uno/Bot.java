@@ -4,11 +4,44 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Bot extends Player {
-  public Bot(String name, boolean b) {
-    super(name, b);
+  private int difficulty; // 1: easy, 2: medium, 3: hard
+
+  public Bot(String name, int difficulty) {
+    super(name, false);
+    this.difficulty = difficulty;
   }
 
-  public int easyTurn(Game game) {
+  public int getDifficulty() {
+    return difficulty;
+  }
+
+  public int chooseCard(Game game) {
+    switch (difficulty) {
+      case 1:
+        return easyChoice(game);
+      case 2:
+        return mediumChoice(game);
+      case 3:
+        return hardChoice(game);
+      default:
+        return -1;
+    }
+  }
+
+  public int chooseColor(Game game) {
+    switch (difficulty) {
+      case 1:
+        return easyColor(game);
+      case 2:
+        return mediumColor(game);
+      case 3:
+        return hardColor(game);
+      default:
+        return -1;
+    }
+  }
+
+  public int easyChoice(Game game) {
     for (int i = 0; i < getHandSize(); i++)
       if (seeCard(i).canBePlayed(game))
         return i; // plays the first playable card
@@ -21,7 +54,7 @@ public class Bot extends Player {
     return rand; // chose a random color
   }
 
-  public int mediumTurn(Game game) {
+  public int mediumChoice(Game game) {
     int priority = 5; // has priorities
     int cardIndex = -1;
 
@@ -98,7 +131,7 @@ public class Bot extends Player {
     return colors;
   }
 
-  public int hardTurn(Game game) {
+  public int hardChoice(Game game) {
     boolean danger = game.getNextPlayer().getHandSize() <= 3;
 
     if (danger) {
