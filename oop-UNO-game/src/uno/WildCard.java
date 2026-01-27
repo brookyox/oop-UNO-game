@@ -12,7 +12,7 @@ public class WildCard extends Card {
     return null;
   }
 
-  public void changeColor(Game game,Scanner sc) {
+  public void changeColor(Game game, Scanner sc) {
 
     int n;
     System.out.println("What is the color for the next player?");
@@ -39,66 +39,23 @@ public class WildCard extends Card {
         game.setTopColor(Color.YELLOW);
         break;
     }
-
   }
 
   public void changeColorBot(Game game, Bot bot) {
-    int n = 0;
-    int d = game.getDifficulty();
-    switch (d) {
-      case 1:
-        n = bot.easyColor(game);
+    int n = bot.chooseColor(game);
 
-        switch (n) {
-          case 1:
-            game.setTopColor(Color.RED);
-            break;
-          case 2:
-            game.setTopColor(Color.BLUE);
-            break;
-          case 3:
-            game.setTopColor(Color.GREEN);
-            break;
-          case 4:
-            game.setTopColor(Color.YELLOW);
-            break;
-        }
+    switch (n) {
+      case 1:
+        game.setTopColor(Color.RED);
         break;
       case 2:
-        n = bot.mediumColor(game);
-
-        switch (n) {
-          case 1:
-            game.setTopColor(Color.RED);
-            break;
-          case 2:
-            game.setTopColor(Color.BLUE);
-            break;
-          case 3:
-            game.setTopColor(Color.GREEN);
-            break;
-          case 4:
-            game.setTopColor(Color.YELLOW);
-            break;
-        }
+        game.setTopColor(Color.BLUE);
         break;
       case 3:
-        n = bot.hardColor(game);
-
-        switch (n) {
-          case 1:
-            game.setTopColor(Color.RED);
-            break;
-          case 2:
-            game.setTopColor(Color.BLUE);
-            break;
-          case 3:
-            game.setTopColor(Color.GREEN);
-            break;
-          case 4:
-            game.setTopColor(Color.YELLOW);
-            break;
-        }
+        game.setTopColor(Color.GREEN);
+        break;
+      case 4:
+        game.setTopColor(Color.YELLOW);
         break;
     }
   }
