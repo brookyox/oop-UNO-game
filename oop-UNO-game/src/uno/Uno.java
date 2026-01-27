@@ -94,6 +94,7 @@ public class Uno {
 						saves.add(save);
 						
 					}
+					game.nextPlayer();
 				}
 				break;
 			case 2:

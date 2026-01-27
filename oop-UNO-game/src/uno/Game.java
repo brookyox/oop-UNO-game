@@ -141,7 +141,7 @@ public class Game {
 					}
 			}
 
-			this.nextPlayer();
+			
 			return;
 		} else if (current.isHuman() == true) {
 			System.out.print("press Enter to show hand...");
@@ -199,7 +199,7 @@ public class Game {
 					drawAllowed = 1;
 				}
 			}
-			this.nextPlayer();
+			
 		}
 		drawAllowed = 0;
 
