@@ -66,9 +66,7 @@ public class Uno {
             for (Player player : players)
               player.resetDrawCounter();
 
-          Deck deck = new Deck();
-          deck.shuffle();
-          Game game = new Game(players, deck, scanner);
+          Game game = new Game(players, scanner);
           cardPlaced = 0;
           ng++;
 

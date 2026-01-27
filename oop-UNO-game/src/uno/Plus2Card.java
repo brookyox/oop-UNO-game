@@ -12,16 +12,7 @@ public class Plus2Card extends ActionCard {
     Deck deck = game.getDeck();
 
     for (int i = 0; i < 2; i++) {
-      if (deck.isEmpty())
-        if (!game.getDisCard().isEmpty()) {
-          Card last = game.getDisCard().pop();
-
-          while (!game.getDisCard().isEmpty())
-            deck.push(game.getDisCard().pop());
-
-          game.getDisCard().push(last);
-        }
-
+      game.refillDeckIfEmpty();
       nextPlayer.drawCard(deck);
     }
 

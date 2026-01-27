@@ -1,8 +1,8 @@
 package uno;
 
 import java.util.ArrayList;
-import java.util.Stack;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class Game {
   private Player[] players = new Player[4];
@@ -13,6 +13,15 @@ public class Game {
   private Card top;
   private Color topColor;
   private Scanner scanner;
+
+  public Game(Player[] players, Scanner scanner) {
+    this.players = players;
+    this.disCard = new Stack<Card>();
+    this.deck = new Deck();
+    deck.shuffle();
+    this.direction = 1;
+    this.scanner = scanner;
+  }
 
   public int getCurrentPlayer() {
     return currentPlayer;
@@ -54,14 +63,6 @@ public class Game {
     return disCard;
   }
 
-  public Game(Player[] players, Deck deck, Scanner scanner) {
-    this.players = players;
-    this.disCard = new Stack<>();
-    this.direction = 1;
-    this.deck = deck;
-    this.scanner = scanner;
-  }
-
   public void start() {
     for (Player p : players)
       for (int i = 0; i < 7; i++)
@@ -80,6 +81,29 @@ public class Game {
       disCard.push(card);
       break;
     }
+  }
+
+  public void displayStack(Stack<Card> stack) {
+    System.out.println("Stack (top → bottom):");
+    for (int i = stack.size() - 1; i >= 0; i--) {
+      Card card = stack.get(i);
+      System.out.println(card);
+    }
+  }
+
+  public void refillDeckIfEmpty() {
+    if (!deck.isEmpty())
+      return;
+
+    System.out.println("Refilling deck from discard pile...");
+
+    Card top = disCard.pop();
+
+    while (!disCard.isEmpty())
+      deck.push(disCard.pop());
+
+    deck.shuffle();
+    disCard.push(top);
   }
 
   public void playTurn() {
@@ -101,13 +125,7 @@ public class Game {
 
         if (choice == -1 && drawAllowed == 0) {
           System.out.println(bot.getName() + " draws a card");
-          if (deck.isEmpty()) {
-            Card last = disCard.pop();
-            while (!disCard.isEmpty()) {
-              deck.push(disCard.pop());
-            }
-            disCard.push(last);
-          }
+          refillDeckIfEmpty();
           bot.drawCard(deck);
           drawAllowed = 1;
         } else if (choice >= 0) {
@@ -130,7 +148,7 @@ public class Game {
       }
 
       if (top != null) {
-        System.out.println("top card is : " + top.toString());
+        System.out.println("top card is : " + top);
 
         if (this.top instanceof WildCard)
           System.out.println("top color is : " + topColor);
@@ -144,7 +162,7 @@ public class Game {
       for (int i = 0; i < 50; i++)
         System.out.println();
 
-      System.out.println("top card is : " + top.toString());
+      System.out.println("top card is : " + top);
 
       if (this.top instanceof WildCard)
         System.out.println("top color is : " + topColor);
@@ -186,15 +204,7 @@ public class Game {
           turnfinish = true;
         } else if (choice == -1 && drawAllowed == 0) {
           System.out.println("you are going to draw a card");
-          if (deck.isEmpty()) {
-            Card last = disCard.pop();
-
-            while (!disCard.isEmpty())
-              deck.push(disCard.pop());
-
-            disCard.push(last);
-          }
-
+          refillDeckIfEmpty();
           current.drawCard(deck);
           drawAllowed = 1;
         }

@@ -1,5 +1,7 @@
 package uno;
+
 import java.util.Scanner;
+
 public class Wild4Card extends WildCard {
   public Wild4Card() {
     super();
@@ -10,24 +12,15 @@ public class Wild4Card extends WildCard {
     return null;
   }
 
-  public void draw4(Game game , Scanner scanner) {
-    this.changeColor(game,scanner);
+  public void draw4(Game game, Scanner scanner) {
+    this.changeColor(game, scanner);
 
     int index = (game.getCurrentPlayer() + game.getDirection() + 4) % 4;
     Player player = game.getPlayer(index);
     Deck deck = game.getDeck();
 
     for (int i = 0; i < 4; i++) {
-      if (deck.isEmpty())
-        if (!game.getDisCard().isEmpty()) {
-          Card last = game.getDisCard().pop();
-
-          while (!game.getDisCard().isEmpty())
-            deck.push(game.getDisCard().pop());
-
-          game.getDisCard().push(last);
-        }
-
+      game.refillDeckIfEmpty();
       player.drawCard(deck);
     }
 
