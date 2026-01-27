@@ -122,6 +122,9 @@ public class Game {
 					disCard.push(selectedCard);
 					top = selectedCard;
 					applyEffectBot(this, bot);
+					if (!(top instanceof WildCard)) {
+				        topColor = top.getColor();
+				    }
 					this.checkWinCond(bot);
 					turnFinished = true;
 				} else if (choice == -1 && drawAllowed == 1) {
@@ -171,6 +174,9 @@ public class Game {
 						top = selectedCard;
 						topColor = top.getColor();
 						this.applyEffect();
+						if (!(top instanceof WildCard)) {
+					        topColor = top.getColor();
+					    }
 						turnfinish = true;
 						this.checkWinCond(current);
 
