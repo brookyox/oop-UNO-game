@@ -8,11 +8,6 @@ public class WildCard extends Card {
   }
 
   @Override
-  public boolean hasColor() {
-    return false;
-  }
-
-  @Override
   public Color getColor() {
     return null;
   }
