@@ -13,17 +13,12 @@ public class BlockCard extends ActionCard {
 
   @Override
   public boolean canBePlayed(Game game) {
-    Card top = game.getTop();
-    Color topcolor = game.getTopColor();
-
-    if (this.getColor() == topcolor || top instanceof BlockCard) {
-      return true;
-    } else
-      return false;
+    Card topCard = game.getTopCard();
+    return super.canBePlayed(game) || topCard instanceof BlockCard;
   }
 
   @Override
   public String toString() {
-    return getColor() + " SKIP";
+    return super.toString() + " SKIP";
   }
 }

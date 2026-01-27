@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Uno {
-  public static void createPlayers(Scanner scanner, Player[] players) {
+  public static void createPlayers(Player[] players) {
+    Scanner scanner = GeneralScanner.getScanner();
     int nbHumanPlayers;
 
     do {
@@ -33,12 +34,11 @@ public class Uno {
       } while (difficulty < 1 || difficulty > 3);
 
       for (int i = nbHumanPlayers; i < 4; i++)
-        players[i] = new Bot("Bot " + (i + 1), difficulty);
+        players[i] = new Bot("Bot " + (i + 1), Difficulty.fromNumber(difficulty));
     }
   }
 
   public static void main(String[] args) {
-    Scanner scanner = new Scanner(System.in);
 
     System.out.println("===== THE UNO GAME =====");
     int cardPlaced;
@@ -48,6 +48,8 @@ public class Uno {
     Player[] players = new Player[4];
     int ng = 0;
     int choice = 0;
+
+    Scanner scanner = GeneralScanner.getScanner();
 
     do {
       System.out.println("1: start a party");
@@ -60,13 +62,13 @@ public class Uno {
       switch (choice) {
         case 1:
           if (!createdPlayers) {
-            createPlayers(scanner, players);
+            createPlayers(players);
             createdPlayers = true;
           } else
             for (Player player : players)
               player.resetDrawCounter();
 
-          Game game = new Game(players, scanner);
+          Game game = new Game(players);
           cardPlaced = 0;
           ng++;
 
@@ -133,6 +135,6 @@ public class Uno {
       }
     } while (choice != 4);
 
-    scanner.close();
+    GeneralScanner.closeScanner();
   }
 }

@@ -1,17 +1,11 @@
 package uno;
 
-public class NumberCard extends Card {
-  private Color color;
+public class NumberCard extends ColoredCard {
   private int number;
 
   public NumberCard(Color color, int number) {
-    this.color = color;
+    super(color);
     this.number = number;
-  }
-
-  @Override
-  public Color getColor() {
-    return color;
   }
 
   public int getValue() {
@@ -19,14 +13,13 @@ public class NumberCard extends Card {
   }
 
   public boolean canBePlayed(Game game) {
-    Card top = game.getTop();
-    Color topcolor = game.getTopColor();
-
-    return this.color == topcolor || (top instanceof NumberCard && this.getValue() == top.getValue());
+    Card topCard = game.getTopCard();
+    return super.canBePlayed(game)
+        || (topCard instanceof NumberCard && this.getValue() == ((NumberCard) topCard).getValue());
   }
 
   @Override
   public String toString() {
-    return color + " " + number;
+    return super.toString() + " " + number;
   }
 }
