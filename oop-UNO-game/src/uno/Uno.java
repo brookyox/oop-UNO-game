@@ -75,6 +75,7 @@ public class Uno {
 
 				while (!gameOver) {
 					game.playTurn();
+					System.out.println("\n");
 					cardPlaced++;
 
 					Player current = game.getPlayer(game.getCurrentPlayer());
