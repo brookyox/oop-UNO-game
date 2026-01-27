@@ -80,7 +80,7 @@ public class Uno {
 
 					Player current = game.getPlayer(game.getCurrentPlayer());
 
-					if (game.endGame(current)) {
+					if (game.checkWinCond(current)) {
 						System.out.println("\n GAME OVER ");
 						System.out.println("Winner is: " + current.getName());
 						gameOver = true;

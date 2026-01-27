@@ -43,6 +43,17 @@ public class Game {
 	public void setTopColor(Color topColor) {
 		this.topColor = topColor;
 	}
+	public Deck getDeck() {
+		return deck;
+	}
+
+	public Player getPlayer(int index) {
+		return players[index];
+	}
+
+	public Stack<Card> getDisCard() {
+		return disCard;
+	}
 
 	public Game(Player[] players, Deck deck, int difficulty) {
 		this.players = players;
@@ -93,7 +104,7 @@ public class Game {
 			boolean turnFinished = false;
 
 			while (!turnFinished) {
-				botPause(1000);
+				botPause(700);
 				System.out.println(bot.getName() + " is thinking...");
 				switch (difficulty) {
 				case 1:
@@ -149,7 +160,7 @@ public class Game {
 			System.out.print("press Enter to show hand...");
 			scanner.nextLine();
 
-			for (int i = 0; i < 10; i++)
+			for (int i = 0; i < 50; i++)
 				System.out.println();
 
 			System.out.println("top card is : " + top.toString());
@@ -247,22 +258,5 @@ public class Game {
 		return players[nextIndex];
 	}
 
-	public boolean endGame(Player player) {
-		if (this.checkWinCond(player))
-			return true;
-		else
-			return false;
-	}
-
-	public Deck getDeck() {
-		return deck;
-	}
-
-	public Player getPlayer(int index) {
-		return players[index];
-	}
-
-	public Stack<Card> getDisCard() {
-		return disCard;
-	}
+	
 }
