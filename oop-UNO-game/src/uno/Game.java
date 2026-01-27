@@ -101,7 +101,7 @@ public class Game {
             choice = bot.mediumTurn(this);
             break;
           case 3:
-            choice = bot.HardTurn(this);
+            choice = bot.hardTurn(this);
             break;
         }
 
