@@ -7,12 +7,23 @@ public class Player {
 	private String name;
 	private ArrayList<Card> hand;
 	private boolean isHuman ;
-	private int drawCounter = 0;
+	private int drawCounter;
+	private int points;
+
+	public int getPoints() {
+		return points;
+	}
+
+	public int getDrawCounter() {
+		return drawCounter;
+	}
 
 	public Player(String name, boolean b) {
 		this.name = name;
 		this.hand = new ArrayList<>();
 		this.isHuman = b;
+		this.drawCounter = 0;
+		this.points= 0;
 	}
 
 	public String getName() {
@@ -54,4 +65,25 @@ public class Player {
           System.out.println((i + 1) + " : " + hand.get(i));
       }
   }
+ 
+  public void countPoints(int cardPlaced) {
+	// TODO Auto-generated method stub
+	  if(cardPlaced <=50) {
+		  this.points += 15;
+	  }else if(cardPlaced <= 100) {
+		  this.points += 10;
+	  }else {
+		  this.points += 5;
+	  }
+	  if (this.drawCounter <= 5) {
+		  this.points += 10 - 2*this.drawCounter;
+	  }
+  }
+
+  public void resetDrawCounter() {
+	// TODO Auto-generated method stub
+	  this.drawCounter = 0;
+	
+  }
+  
 }
