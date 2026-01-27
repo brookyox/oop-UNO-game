@@ -6,10 +6,10 @@ public class GameSave {
   int cardPlaced;
   int pointsWon;
 
-  public GameSave(int ng, int cardPlaced, Player current) {
-    this.gameNumber = ng;
+  public GameSave(int gameNumber, int cardPlaced, Player winner) {
+    this.gameNumber = gameNumber;
     this.cardPlaced = cardPlaced;
-    this.winnerName = current.getName();
+    this.winnerName = winner.getName();
 
     if (cardPlaced <= 50)
       this.pointsWon = 15;
@@ -18,7 +18,7 @@ public class GameSave {
     else
       this.pointsWon = 5;
 
-    int n = current.getDrawCounter();
+    int n = winner.getDrawCounter();
     if (n <= 5)
       this.pointsWon += 10 - 2 * n;
   }
