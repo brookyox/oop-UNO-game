@@ -8,11 +8,6 @@ public abstract class ActionCard extends Card {
   }
 
   @Override
-  public boolean hasColor() {
-    return true;
-  }
-
-  @Override
   public Color getColor() {
     return color;
   }

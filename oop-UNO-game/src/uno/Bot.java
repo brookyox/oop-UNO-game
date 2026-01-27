@@ -1,5 +1,8 @@
 package uno;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+
 public class Bot extends Player {
   public Bot(String name, boolean b) {
     super(name, b);
@@ -19,257 +22,138 @@ public class Bot extends Player {
   }
 
   public int mediumTurn(Game game) {
-    int priority = 0; // has priorities
-    for (int i = 0; i < getHandSize(); i++) {
-      if (seeCard(i).canBePlayed(game)) {
-        Card card = seeCard(i);
-        if (card instanceof ActionCard) {
-          priority = 1;// prioritize action cards
-        } else if (card instanceof NumberCard && priority != 1) {
-          priority = 2;// uses number cards as a second priority
-        } else if (card instanceof Wild4Card && priority != 1 && priority != 2) {
-          priority = 3;// uses wild4cards and wild cards as a last resort
-        } else if (card instanceof WildCard && priority != 1 && priority != 2 && priority != 3) {
-          priority = 4;// prioritize wild4cards because of the +4 effect
-        }
-      }
-    }
+    int priority = 5; // has priorities
+    int cardIndex = -1;
 
     for (int i = 0; i < getHandSize(); i++) {
       if (seeCard(i).canBePlayed(game)) {
         Card card = seeCard(i);
-
-        switch (priority) {
-          case 1:
-            if (card instanceof ActionCard)
-              return i;
-          case 2:
-            if (card instanceof NumberCard)
-              return i;
-          case 3:
-            if (card instanceof Wild4Card)
-              return i;
-          case 4:
-            return i;
+        if (card instanceof ActionCard && priority > 1) {
+          priority = 1;
+          cardIndex = i;
+          break;
+        } else if (card instanceof NumberCard && priority > 2) {
+          priority = 2;
+          cardIndex = i;
+        } else if (card instanceof Wild4Card && priority > 3) {
+          priority = 3;
+          cardIndex = i;
+        } else if (card instanceof WildCard && priority > 4) {
+          priority = 4;
+          cardIndex = i;
         }
       }
     }
 
-    return -1;
+    return cardIndex;
   }
 
   public int mediumColor(Game game) {
-    for (int i = 0; i < getHandSize(); i++) {
-      if (!(seeCard(i) instanceof WildCard)) {
-        Card card = seeCard(i);
-        if (card.getColor() == Color.RED) {
+    for (Card card : getHand())
+      switch (card.getColor()) {
+        case RED:
           return 1;
-        }
-        if (card.getColor() == Color.BLUE) {
+        case BLUE:
           return 2;
-        }
-        if (card.getColor() == Color.GREEN) {
+        case GREEN:
           return 3;
-        }
-        if (card.getColor() == Color.YELLOW) {
+        case YELLOW:
           return 4;
-        }
       }
-    }
+
     int rand = (int) (Math.random() * 4) + 1;
     return rand;// chose a random color
   }
 
-  public int HardTurn(Game game) {
-    int priority = 0;
+  public int getDangerCardIndex(Game game) {
+    for (int i = 0; i < getHandSize(); i++) {
+      Card card = seeCard(i);
+
+      if (!card.canBePlayed(game))
+        continue;
+
+      if (card instanceof ActionCard || card instanceof Wild4Card)
+        return i;
+    }
+
+    return -1;
+  }
+
+  public static ArrayList<Color> getColorsByFrequency(ArrayList<Card> hand) {
+    HashMap<Color, Integer> count = new HashMap<>();
+
+    // count cards per color
+    for (Card card : hand) {
+      Color color = card.getColor();
+      count.put(color, count.getOrDefault(color, 0) + 1);
+    }
+
+    // put colors into an ArrayList
+    ArrayList<Color> colors = new ArrayList<>(count.keySet());
+
+    // sort by frequency (descending)
+    colors.sort((c1, c2) -> count.get(c2) - count.get(c1));
+
+    return colors;
+  }
+
+  public int hardTurn(Game game) {
     boolean danger = game.getNextPlayer().getHandSize() <= 3;
-    int red = 0;
-    int blue = 0;
-    int green = 0;
-    int yellow = 0;
-    for (int i = 0; i < getHandSize(); i++) {
-      Card card = seeCard(i);
-      if (card.getColor() == Color.RED) {
-        red++;
-      } else if (card.getColor() == Color.BLUE) {
-        blue++;
-      } else if (card.getColor() == Color.GREEN) {
-        green++;
-      } else if (card.getColor() == Color.YELLOW) {
-        yellow++;
-      }
-    }
-    for (int i = 0; i < getHandSize(); i++) {
-      Card card = seeCard(i);
-      if (card.canBePlayed(game)) {
-        if (danger && (card instanceof ActionCard || card instanceof Wild4Card)) {
-          priority = 1;
-        } else if (card instanceof NumberCard && priority != 1) {
-          priority = 2;
-        } else if (card instanceof ActionCard && !danger && priority != 1 && priority != 2) {
-          priority = 3;
-        } else if (card instanceof WildCard && !danger && priority != 1 && priority != 2 && priority != 3) {
-          priority = 4;
-        }
-      }
+
+    if (danger) {
+      int cardIndex = getDangerCardIndex(game);
+
+      if (cardIndex != -1)
+        return cardIndex;
     }
 
-    for (int i = 0; i < getHandSize(); i++) {
-      if (seeCard(i).canBePlayed(game)) {
+    ArrayList<Color> sortedColors = getColorsByFrequency(this.getHand());
+
+    for (Color color : sortedColors) {
+      int priority = 3; // has priorities
+      int cardIndex = -1;
+
+      for (int i = 0; i < getHandSize(); i++) {
         Card card = seeCard(i);
-        if (priority == 1) {
-          if (card instanceof ActionCard || card instanceof Wild4Card) {
-            return i;
-          }
-        } else if (priority == 2 || priority == 3) {
-          int[] colors = { 1, 2, 3, 4 }; // 1=red, 2=blue, 3=green, 4=yellow
+        if (!card.canBePlayed(game) || card.getColor() != color)
+          continue;
 
-          for (int j = 0; j < 3; j++) {
-            int maxIndex = j;
-
-            for (int k = j + 1; k < 4; k++) {
-
-              // compare directly using your variables
-              int maxValue = 0;
-              int currentValue = 0;
-
-              // value at maxIndex
-              if (colors[maxIndex] == 1)
-                maxValue = red;
-              else if (colors[maxIndex] == 2)
-                maxValue = blue;
-              else if (colors[maxIndex] == 3)
-                maxValue = green;
-              else
-                maxValue = yellow;
-
-              // value at k
-              if (colors[k] == 1)
-                currentValue = red;
-              else if (colors[k] == 2)
-                currentValue = blue;
-              else if (colors[k] == 3)
-                currentValue = green;
-              else
-                currentValue = yellow;
-
-              if (currentValue > maxValue) {
-                maxIndex = k;
-              }
-            }
-
-            // swap colors
-            int tmp = colors[j];
-            colors[j] = colors[maxIndex];
-            colors[maxIndex] = tmp;
-          }
-          if (priority == 2) {
-            if (card instanceof NumberCard) {
-              for (int l = 0; l < colors.length; l++) {
-                int preferredColor = colors[l]; // 1=RED, 2=BLUE, 3=GREEN, 4=YELLOW
-
-                switch (preferredColor) {
-                  case 1: // RED
-                    if (card.getColor() == Color.RED) {
-                      return i;
-                    }
-                    break;
-                  case 2:
-                    if (card.getColor() == Color.BLUE) {
-                      return i;
-                    }
-                    break;
-                  case 3: // GREEN
-                    if (card.getColor() == Color.GREEN) {
-                      return i;
-                    }
-                    break;
-                  case 4: // YELLOW
-                    if (card.getColor() == Color.YELLOW) {
-                      return i;
-                    }
-                    break;
-                }
-              }
-            }
-          } else if (priority == 3) {
-            if (card instanceof ActionCard) {
-              for (int l = 0; l < colors.length; l++) {
-                int preferredColor = colors[l]; // 1=RED, 2=BLUE, 3=GREEN, 4=YELLOW
-
-                switch (preferredColor) {
-                  case 1: // RED
-                    if (card.getColor() == Color.RED) {
-                      return i;
-                    }
-                    break;
-                  case 2:
-                    if (card.getColor() == Color.BLUE) {
-                      return i;
-                    }
-                    break;
-                  case 3: // GREEN
-                    if (card.getColor() == Color.GREEN) {
-                      return i;
-                    }
-                    break;
-                  case 4: // YELLOW
-                    if (card.getColor() == Color.YELLOW) {
-                      return i;
-                    }
-                    break;
-                }
-              }
-            }
-          }
-        } else if (priority == 4) {
+        if (card instanceof NumberCard)
           return i;
+
+        if (card instanceof ActionCard && priority > 2) {
+          priority = 2;
+          cardIndex = i;
         }
       }
+
+      if (cardIndex != -1)
+        return cardIndex;
     }
+
+    for (int i = 0; i < getHandSize(); i++) {
+      Card card = seeCard(i);
+      if (card instanceof WildCard)
+        return i;
+    }
+
     return -1;
   }
 
   public int hardColor(Game game) {
-    int red = 0;
-    int blue = 0;
-    int green = 0;
-    int yellow = 0;
-    for (int i = 0; i < getHandSize(); i++) {
-      Card card = seeCard(i);
-      if (card.getColor() == Color.RED) {
-        red++;
-      } else if (card.getColor() == Color.BLUE) {
-        blue++;
-      } else if (card.getColor() == Color.GREEN) {
-        green++;
-      } else if (card.getColor() == Color.YELLOW) {
-        yellow++;
-      }
-    }
-    int max = red;
+    ArrayList<Color> sortedColors = getColorsByFrequency(this.getHand());
 
-    if (blue > max) {
-      max = blue;
+    switch (sortedColors.get(0)) {
+      case RED:
+        return 1;
+      case BLUE:
+        return 2;
+      case GREEN:
+        return 3;
+      case YELLOW:
+        return 4;
     }
-    if (green > max) {
-      max = green;
-    }
-    if (yellow > max) {
-      max = yellow;
-    }
-    if (max == red) {
-      return 1;
-    }
-    if (max == blue) {
-      return 2;
-    }
-    if (max == green) {
-      return 3;
-    }
-    if (max == yellow) {
-      return 4;
-    }
+
     int rand = (int) (Math.random() * 4) + 1;
     return rand;// chose a random color
   }

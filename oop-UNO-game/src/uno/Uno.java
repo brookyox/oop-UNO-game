@@ -31,7 +31,7 @@ public class Uno {
 					int nbHumanPlayers;
 
 					do {
-						System.out.print("Enter number of Human players (max 4) ");
+						System.out.print("Enter number of Human players (<= 4): ");
 						nbHumanPlayers = scanner.nextInt();
 					} while (nbHumanPlayers < 0 || nbHumanPlayers > 4);
 
@@ -58,8 +58,8 @@ public class Uno {
 					}
 					createdPlayers = true;
 				} else
-					for (int i = 0; i < 4; i++)
-						players[i].resetDrawCounter();
+					for (Player player: players)
+						player.resetDrawCounter();
 
 				Deck deck = new Deck();
 				deck.shuffle();

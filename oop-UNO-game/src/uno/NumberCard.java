@@ -10,11 +10,6 @@ public class NumberCard extends Card {
   }
 
   @Override
-  public boolean hasColor() {
-    return true;
-  }
-
-  @Override
   public Color getColor() {
     return color;
   }
