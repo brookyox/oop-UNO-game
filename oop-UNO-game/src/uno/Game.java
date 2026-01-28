@@ -82,13 +82,6 @@ public class Game {
     }
   }
 
-  public void displayStack(Stack<Card> stack) {
-    System.out.println("Stack (top → bottom):");
-    for (int i = stack.size() - 1; i >= 0; i--) {
-      Card card = stack.get(i);
-      System.out.println(card);
-    }
-  }
 
   public void refillDeckIfEmpty() {
     if (!deck.isEmpty())

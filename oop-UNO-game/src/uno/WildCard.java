@@ -32,7 +32,7 @@ public class WildCard extends Card {
 
   public void changeColor(Game game, Color color) {
     game.setTopColor(color);
-    System.out.println(game.getCurrentPlayer() + " changed color to " + color);
+    System.out.println(" changed color to " + color);
   }
 
   @Override

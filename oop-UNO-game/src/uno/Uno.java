@@ -31,6 +31,7 @@ public class Uno {
       int difficulty;
       do {
         difficulty = scanner.nextInt();
+        scanner.nextLine();
       } while (difficulty < 1 || difficulty > 3);
 
       for (int i = nbHumanPlayers; i < 4; i++)
