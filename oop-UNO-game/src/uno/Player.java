@@ -34,7 +34,7 @@ public class Player {
   }
 
   public ArrayList<Card> getHand() {
-    return hand;
+    return new ArrayList<>(hand);
   }
 
   public int getHandSize() {
